@@ -1,0 +1,18 @@
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: 12345678
+
+spring.devtools:
+  restart:
+    enabled: true
+
+server:
+  servlet:
+    context-path: /oslc
+  port: 8081
+
+data:
+  path: localhost:8080/neo4j
