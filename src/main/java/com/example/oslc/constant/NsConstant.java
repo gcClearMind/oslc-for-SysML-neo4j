@@ -35,5 +35,5 @@ public class NsConstant {
 
 
 
-
+    public static final String HDR_OSLC_VERSION = "OSLC-Core-Version";
 }
