@@ -43,7 +43,7 @@ public class BlockService {
         return os.toString();
     }
 
-    public List<String> getAllResourceURIs() throws IOException {
+    public List<String> getAllResourceURIs()  {
         List<String> res = new ArrayList<>();
         List<BlockResource> list = neo4jUtil.getAllBlockResource();
         // 排序 按id大小
@@ -54,8 +54,9 @@ public class BlockService {
             }
         });
 
-        for (BlockResource resource : list)
-            res.add(RdfUtil.getBlockResourceURI(resource ));
+        for (BlockResource resource : list) {
+            res.add(RdfUtil.getBlockResourceURI(resource));
+        }
 
         return res;
     }

@@ -14,12 +14,12 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class JsonUtil {
-    public static List<?> JsonToResource(HttpClient client, HttpRequest request) {
-        List<?> data = null;
+    public static List<BlockResource> JsonToResource(HttpClient client, HttpRequest request) {
+        List<BlockResource> data = null;
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper objectMapper = new ObjectMapper();
-            data = objectMapper.readValue(response.body(), new TypeReference<List<?>>() {
+            data = objectMapper.readValue(response.body(), new TypeReference<List<BlockResource>>() {
             });
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
