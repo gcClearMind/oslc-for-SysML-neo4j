@@ -20,12 +20,19 @@
 package com.example.oslc.servlet;
 
 import com.example.oslc.contoller.BlockContoller;
-import org.eclipse.lyo.oslc4j.client.ServiceProviderRegistryURIs;
+import com.example.oslc.info.ServiceProviderInfo;
+import org.eclipse.lyo.oslc.domains.DctermsDomainConstants;
+import org.eclipse.lyo.oslc.domains.FoafDomainConstants;
+import org.eclipse.lyo.oslc.domains.rm.Oslc_rmDomainConstants;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.*;
 
+import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceProviderFactory
@@ -40,45 +47,83 @@ public class ServiceProviderFactory
         super();
     }
 
-    /**
-     * Create a new Bugzilla OSLC change management service provider.
-     * @param baseURI
-     * @param product
-     * @param parameterValueMap - a map containing the path replacement value for {productId}.  See ServiceProviderCatalogSingleton.initServiceProvidersFromProducts()
-     * @return
-     * @throws OslcCoreApplicationException
-     * @throws URISyntaxException
-     */
-    public static ServiceProvider createServiceProvider(final String baseURI, final String product, final Map<String,Object> parameterValueMap)
-           throws OslcCoreApplicationException, URISyntaxException
+
+    public static URI constructURI(final String serviceProviderId)
     {
-        final ServiceProvider serviceProvider = org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory.createServiceProvider(baseURI,
-                                                                                             ServiceProviderRegistryURIs.getUIURI(),
-                                                                                             product,
-                                                                                             "Service provider for Bugzilla product: "+product,
-                                                                                             new Publisher("Eclipse Lyo", "urn:oslc:ServiceProvider"),
-                                                                                             RESOURCE_CLASSES,
-                                                                                             parameterValueMap);
-        URI detailsURIs[] = {new URI(baseURI)};
-        serviceProvider.setDetails(detailsURIs);
+        String basePath = OSLC4JUtils.getServletURI();
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("serviceProviderId", serviceProviderId);
+        String instanceURI = "serviceProviders/{serviceProviderId}";
+
+        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+
+    public static URI constructURI(final ServiceProviderInfo serviceProviderInfo)
+    {
+        return constructURI(serviceProviderInfo.serviceProviderId);
+    }
+
+    public static String constructIdentifier(final String serviceProviderId)
+    {
+        return serviceProviderId;
+    }
+
+    public static String constructIdentifier(final ServiceProviderInfo serviceProviderInfo)
+    {
+        return constructIdentifier(serviceProviderInfo.serviceProviderId);
+    }
+
+
+    public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
+            throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {
+        // Start of user code init
+        // End of user code
+        URI serviceProviderURI = constructURI(serviceProviderInfo);
+        String identifier = constructIdentifier(serviceProviderInfo);
+        String basePath = OSLC4JUtils.getServletURI();
+        String title = serviceProviderInfo.name;
+        String description = String.format("%s (id: %s; kind: %s)",
+                "Service Provider for the RM domain resources",
+                identifier,
+                "RM Service Provider");
+        Publisher publisher = null;
+        Map<String, Object> parameterMap = new HashMap<String, Object>();
+        parameterMap.put("serviceProviderId", serviceProviderInfo.serviceProviderId);
+
+        ServiceProvider serviceProvider = org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory.createServiceProvider(basePath,
+                "",
+                title,
+                description,
+                publisher,
+                RESOURCE_CLASSES,
+                parameterMap);
 
         final PrefixDefinition[] prefixDefinitions =
-        {
-            new PrefixDefinition(OslcConstants.DCTERMS_NAMESPACE_PREFIX,             new URI(OslcConstants.DCTERMS_NAMESPACE)),
-            new PrefixDefinition(OslcConstants.OSLC_CORE_NAMESPACE_PREFIX,           new URI(OslcConstants.OSLC_CORE_NAMESPACE)),
-            new PrefixDefinition(OslcConstants.OSLC_DATA_NAMESPACE_PREFIX,           new URI(OslcConstants.OSLC_DATA_NAMESPACE)),
-            new PrefixDefinition(OslcConstants.RDF_NAMESPACE_PREFIX,                 new URI(OslcConstants.RDF_NAMESPACE)),
-            new PrefixDefinition(OslcConstants.RDFS_NAMESPACE_PREFIX,                new URI(OslcConstants.RDFS_NAMESPACE)),
-//            new PrefixDefinition(Constants.CHANGE_MANAGEMENT_NAMESPACE_PREFIX,       new URI(Constants.CHANGE_MANAGEMENT_NAMESPACE)),
-//            new PrefixDefinition(Constants.BUGZILLA_NAMESPACE_PREFIX,                new URI(Constants.BUGZILLA_NAMESPACE)),
-//            new PrefixDefinition(Constants.FOAF_NAMESPACE_PREFIX,                    new URI(Constants.FOAF_NAMESPACE)),
-//            new PrefixDefinition(Constants.QUALITY_MANAGEMENT_PREFIX,                new URI(Constants.QUALITY_MANAGEMENT_NAMESPACE)),
-//            new PrefixDefinition(Constants.REQUIREMENTS_MANAGEMENT_PREFIX,           new URI(Constants.REQUIREMENTS_MANAGEMENT_NAMESPACE)),
-//            new PrefixDefinition(Constants.SOFTWARE_CONFIGURATION_MANAGEMENT_PREFIX, new URI(Constants.SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE))
-        };
+                {
+                        new PrefixDefinition(OslcConstants.DCTERMS_NAMESPACE_PREFIX, new URI(OslcConstants.DCTERMS_NAMESPACE)),
+                        new PrefixDefinition(OslcConstants.OSLC_CORE_NAMESPACE_PREFIX, new URI(OslcConstants.OSLC_CORE_NAMESPACE)),
+                        new PrefixDefinition(OslcConstants.OSLC_DATA_NAMESPACE_PREFIX, new URI(OslcConstants.OSLC_DATA_NAMESPACE)),
+                        new PrefixDefinition(OslcConstants.RDF_NAMESPACE_PREFIX, new URI(OslcConstants.RDF_NAMESPACE)),
+                        new PrefixDefinition(OslcConstants.RDFS_NAMESPACE_PREFIX, new URI(OslcConstants.RDFS_NAMESPACE)),
 
+                        new PrefixDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE_PREFIX, new URI(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE))
+                        ,
+                        new PrefixDefinition(FoafDomainConstants.FOAF_NAMSPACE_PREFIX, new URI(FoafDomainConstants.FOAF_NAMSPACE))
+                        ,
+                        new PrefixDefinition(OslcDomainConstants.OSLC_NAMSPACE_PREFIX, new URI(OslcDomainConstants.OSLC_NAMSPACE))
+                        ,
+                        new PrefixDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_SHAPES_NAMSPACE_PREFIX, new URI(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_SHAPES_NAMSPACE))
+                };
         serviceProvider.setPrefixDefinitions(prefixDefinitions);
 
+        serviceProvider.setAbout(serviceProviderURI);
+        serviceProvider.setIdentifier(identifier);
+        serviceProvider.setCreated(new Date());
+        serviceProvider.setDetails(new URI[] {serviceProviderURI});
+
+        // Start of user code finalize
+        // End of user code
         return serviceProvider;
     }
 }

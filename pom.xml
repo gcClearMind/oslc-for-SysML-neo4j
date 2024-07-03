@@ -18,11 +18,17 @@
 
     <properties>
         <java.version>17</java.version>
-        <version.lyo>4.1.0</version.lyo>
+        <jersey.version>2.35</jersey.version>
+<!--        <version.lyo>4.1.0</version.lyo>-->
+        <version.lyo>6.0.0-SNAPSHOT</version.lyo>
+
+
+        <v.lucene>9.5.0</v.lucene>
         <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
     </properties>
 
     <dependencies>
+<!--        springboot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-neo4j</artifactId>
@@ -63,12 +69,37 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+
+        <!-- Specific dependencies -->
+        <!-- Start of user code dependencies
+        -->
+        <dependency>
+            <groupId>co.oslc.refimpl</groupId>
+            <artifactId>lib-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${v.lucene}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${v.lucene}</version>
+        </dependency>
+
+        <!-- End of user code
+          -->
+
+
+
 
 
         <!--        neo4j-->
@@ -113,11 +144,11 @@
             <artifactId>oslc4j-core</artifactId>
             <version>${version.lyo}</version>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.lyo.oslc4j.core</groupId>
-            <artifactId>oslc4j-wink</artifactId>
-            <version>${version.lyo}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.lyo.oslc4j.core</groupId>-->
+<!--            <artifactId>oslc4j-wink</artifactId>-->
+<!--            <version>${version.lyo}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.eclipse.lyo.oslc4j.core</groupId>
             <artifactId>oslc4j-jena-provider</artifactId>
@@ -128,13 +159,32 @@
             <artifactId>oslc4j-json4j-provider</artifactId>
             <version>${version.lyo}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-core</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-consumer-store</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-webapp</artifactId>
+            <version>${version.lyo}</version>
+            <type>war</type>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.lyo.clients</groupId>
             <artifactId>oslc-client</artifactId>
             <version>${version.lyo}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.eclipse.lyo</groupId>
+            <artifactId>oslc-domains</artifactId>
+            <version>6.0.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
@@ -142,6 +192,12 @@
             <version>2.0.1.Final</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.glassfish.hk2.external</groupId>
+            <artifactId>jakarta.inject</artifactId>
+            <version>2.6.1</version>
+        </dependency>
 
     </dependencies>
 

@@ -2,6 +2,7 @@ package com.example.oslc.contoller;
 
 import com.example.oslc.constant.NsConstant;
 import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
+import org.eclipse.lyo.oslc4j.core.annotation.OslcDialog;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
@@ -29,7 +30,16 @@ public class ServiceProviderCatalogController {
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
 
-
+    @OslcDialog
+            (
+                    title = "Service Provider Selection Dialog",
+                    label = "Service Provider Selection Dialog",
+                    uri = "",
+                    hintWidth = "1000px",
+                    hintHeight = "600px",
+                    resourceTypes = {OslcConstants.TYPE_SERVICE_PROVIDER},
+                    usages = {OslcConstants.OSLC_USAGE_DEFAULT}
+            )
     @GetMapping("/")
     public Response getServiceProviderCatalogs() throws IOException, URISyntaxException
     {
