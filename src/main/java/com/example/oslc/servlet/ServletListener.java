@@ -32,6 +32,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.WebListener;
 import javax.ws.rs.core.UriBuilder;
 import java.net.MalformedURLException;
 import java.util.Locale;
@@ -45,6 +46,7 @@ import java.util.Optional;
  * <p>
  * See getConfigurationProperty() for the different alternatives to set this base URI. 
  */
+@WebListener
 public class ServletListener implements ServletContextListener  {
     private static final Logger logger = LoggerFactory.getLogger(ServletListener.class);
 
@@ -60,7 +62,7 @@ public class ServletListener implements ServletContextListener  {
     {
         //These are default values. You can modify any of them early in this method.
         String basePathKey = "baseurl";
-        String fallbackBase = "http://localhost:8080";
+        String fallbackBase = "http://localhost:8081/oslc";
         String servletName = "JAX-RS Servlet";
 
         // Start of user code contextInitialized_init
@@ -104,7 +106,7 @@ public class ServletListener implements ServletContextListener  {
     {
         // Start of user code contextDestroyed_init
         // End of user code
-        
+        System.out.println("@WebListener context 销毁");
     }
 
     // Start of user code class_methods

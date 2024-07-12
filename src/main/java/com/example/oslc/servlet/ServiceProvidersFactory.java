@@ -35,14 +35,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServiceProviderFactory
+public class ServiceProvidersFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
         BlockContoller.class
     };
 
-    private ServiceProviderFactory()
+    private ServiceProvidersFactory()
     {
         super();
     }
@@ -55,6 +55,7 @@ public class ServiceProviderFactory
         pathParameters.put("serviceProviderId", serviceProviderId);
         String instanceURI = "serviceProviders/{serviceProviderId}";
 
+        System.out.println("basePath: " + basePath);
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
@@ -69,7 +70,7 @@ public class ServiceProviderFactory
         return serviceProviderId;
     }
 
-    public static String constructIdentifier(final ServiceProviderInfo serviceProviderInfo)
+    public static String  constructIdentifier(final ServiceProviderInfo serviceProviderInfo)
     {
         return constructIdentifier(serviceProviderInfo.serviceProviderId);
     }

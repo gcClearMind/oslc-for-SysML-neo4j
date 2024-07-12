@@ -68,7 +68,10 @@ public class ServiceProviderCatalogSingleton
 
     static {
         serviceProviderCatalog = new ServiceProviderCatalog();
-        URI catalogUri = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build();
+
+        String ServletURI = OSLC4JUtils.getServletURI();
+        System.out.println("ServletURI: " + ServletURI);
+        URI catalogUri = UriBuilder.fromUri(ServletURI).path("/catalog/singleton").build();
         serviceProviderCatalog.setAbout(catalogUri);
         serviceProviderCatalog.setTitle("Service Provider Catalog");
         serviceProviderCatalog.setDescription("Service Provider Catalog");
@@ -174,7 +177,7 @@ public class ServiceProviderCatalogSingleton
 
         synchronized(serviceProviders)
         {
-            String identifier = ServiceProviderFactory.constructIdentifier(serviceProviderId);
+            String identifier = ServiceProvidersFactory.constructIdentifier(serviceProviderId);
             serviceProvider = serviceProviders.get(identifier);
 
             //One retry refreshing the service providers
@@ -227,8 +230,8 @@ public class ServiceProviderCatalogSingleton
             ServiceProviderInfo[] serviceProviderInfos = RestDelegate.getServiceProviderInfos(httpServletRequest);
             //Register each service provider
             for (ServiceProviderInfo serviceProviderInfo : serviceProviderInfos) {
-                if (!containsServiceProvider(ServiceProviderFactory.constructIdentifier(serviceProviderInfo))) {
-                    ServiceProvider aServiceProvider = ServiceProviderFactory.createServiceProvider(serviceProviderInfo);
+                if (!containsServiceProvider(ServiceProvidersFactory.constructIdentifier(serviceProviderInfo))) {
+                    ServiceProvider aServiceProvider = ServiceProvidersFactory.createServiceProvider(serviceProviderInfo);
                     register(aServiceProvider);
                 }
             }
