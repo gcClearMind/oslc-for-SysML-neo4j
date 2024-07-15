@@ -28,13 +28,19 @@ import org.apache.jena.sys.JenaSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRegistration;
-import javax.servlet.annotation.WebListener;
-import javax.ws.rs.core.UriBuilder;
+
+import jakarta.ws.rs.core.UriBuilder;
+
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletRegistration;
+import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContext;
+import org.springframework.stereotype.Component;
+
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -46,8 +52,9 @@ import java.util.Optional;
  * <p>
  * See getConfigurationProperty() for the different alternatives to set this base URI. 
  */
-@WebListener
-public class ServletListener implements ServletContextListener  {
+
+@Component
+public class ServletListener implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(ServletListener.class);
 
     // Start of user code class_attributes
@@ -60,9 +67,10 @@ public class ServletListener implements ServletContextListener  {
     @Override
     public void contextInitialized(final ServletContextEvent servletContextEvent)
     {
+        System.out.println("@WebListener context 启动");
         //These are default values. You can modify any of them early in this method.
         String basePathKey = "baseurl";
-        String fallbackBase = "http://localhost:8081/oslc";
+        String fallbackBase = "http://localhost:8081";
         String servletName = "JAX-RS Servlet";
 
         // Start of user code contextInitialized_init
@@ -72,6 +80,7 @@ public class ServletListener implements ServletContextListener  {
 
         ServletContext servletContext = servletContextEvent.getServletContext();
         String basePathProperty = getConfigurationProperty(basePathKey, fallbackBase, servletContext, ServletListener.class);
+
         UriBuilder builder = UriBuilder.fromUri(basePathProperty);
         String baseUrl = builder.path(servletContext.getContextPath()).build().toString();
         String servletUrlPattern = "services/";
@@ -84,6 +93,7 @@ public class ServletListener implements ServletContextListener  {
             logger.info("Setting public URI: " + baseUrl);
             OSLC4JUtils.setPublicURI(baseUrl);
             logger.info("Setting servlet path: " + servletUrlPattern);
+            System.out.println("Setting servlet path: " + servletUrlPattern);
             OSLC4JUtils.setServletPath(servletUrlPattern);
         } catch (MalformedURLException e) {
             logger.error("servletListner encountered MalformedURLException.", e);

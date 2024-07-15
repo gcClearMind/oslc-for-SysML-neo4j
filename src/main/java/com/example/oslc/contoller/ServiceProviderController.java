@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @RestController
 @RequestMapping("/serviceProviders")
 public class ServiceProviderController {
-    @Context private HttpServletRequest httpServletRequest;
-    @Context private HttpServletResponse httpServletResponse;
+//    @Context private HttpServletRequest httpServletRequest;
+//    @Context private HttpServletResponse httpServletResponse;
     @OslcDialog
             (
                     title = "Service Provider Selection Dialog",
@@ -46,7 +47,7 @@ public class ServiceProviderController {
 
     @GetMapping("/")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
-    public ServiceProvider[] getServiceProviders()
+    public ServiceProvider[] getServiceProviders(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
     {
         httpServletResponse.addHeader("Oslc-Core-Version","2.0");
         return ServiceProviderCatalogSingleton.getServiceProviders(httpServletRequest);
@@ -54,7 +55,9 @@ public class ServiceProviderController {
 
     @GetMapping("/{serviceProviderId}")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
-    public ServiceProvider getServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId)
+    public ServiceProvider getServiceProvider(HttpServletRequest httpServletRequest,
+                                              HttpServletResponse httpServletResponse,
+                                              @PathParam("serviceProviderId") final String serviceProviderId)
     {
         httpServletResponse.addHeader("Oslc-Core-Version","2.0");
         return ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, serviceProviderId);

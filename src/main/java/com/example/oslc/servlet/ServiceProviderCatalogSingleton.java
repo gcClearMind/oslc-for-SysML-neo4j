@@ -33,10 +33,11 @@ import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.SortedMap;
@@ -59,6 +60,7 @@ import java.util.TreeSet;
  * The registered service providers are refreshed on each catalog or service provider collection
  * request.
  */
+
 public class ServiceProviderCatalogSingleton
 {
     private static final ServiceProviderCatalog serviceProviderCatalog;
@@ -71,6 +73,9 @@ public class ServiceProviderCatalogSingleton
 
         String ServletURI = OSLC4JUtils.getServletURI();
         System.out.println("ServletURI: " + ServletURI);
+        if(ServletURI == null) {
+            ServletURI = "services/";
+        }
         URI catalogUri = UriBuilder.fromUri(ServletURI).path("/catalog/singleton").build();
         serviceProviderCatalog.setAbout(catalogUri);
         serviceProviderCatalog.setTitle("Service Provider Catalog");

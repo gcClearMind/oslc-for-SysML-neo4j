@@ -44,7 +44,7 @@ import org.eclipse.lyo.oslc4j.provider.json4j.Json4JProvidersRegistry;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -59,7 +59,7 @@ import java.util.*;
  */
 
 @OpenAPIDefinition(info = @Info(title = "RM", version = "1.0.0"), servers = @Server(url = "/services/"))
-public class Application extends javax.ws.rs.core.Application {
+public class Application extends jakarta.ws.rs.core.Application {
 
     private static final Set<Class<?>>         RESOURCE_CLASSES                          = new HashSet<Class<?>>();
     private static final Map<String, Class<?>> RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP = new HashMap<String, Class<?>>();

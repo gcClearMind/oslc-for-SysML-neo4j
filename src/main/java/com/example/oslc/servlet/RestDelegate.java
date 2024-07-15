@@ -42,10 +42,11 @@ import org.eclipse.lyo.oslc.domains.rm.RequirementCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
+
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executor;
@@ -148,13 +149,16 @@ public class RestDelegate {
     public static ServiceProviderInfo[] getServiceProviderInfos(HttpServletRequest httpServletRequest)
     {
         ServiceProviderInfo[] serviceProviderInfos = {};
-        
-        // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)"
+
+
+        // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)" todo add serviceProvider
         ServiceProviderInfo spInfo = new ServiceProviderInfo();
         spInfo.serviceProviderId = SP_DEFAULT;
         spInfo.name = "Default ServiceProvider";
         serviceProviderInfos = new ServiceProviderInfo[] {spInfo};
         // End of user code
+
+
         return serviceProviderInfos;
     }
 

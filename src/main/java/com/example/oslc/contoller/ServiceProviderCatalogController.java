@@ -5,33 +5,34 @@ import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDialog;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcQueryCapability;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
-import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
-import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
-import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
+import org.eclipse.lyo.oslc4j.core.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @RestController
 @RequestMapping("/catalog")
-public class ServiceProviderCatalogController {
-    @Context private HttpServletRequest httpServletRequest;
-    @Context private HttpServletResponse httpServletResponse;
-    @Context private UriInfo uriInfo;
-
+public class ServiceProviderCatalogController  {
 
     @OslcDialog
             (
@@ -51,29 +52,51 @@ public class ServiceProviderCatalogController {
                     resourceTypes = {OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
-    @GetMapping("/")
-    public RedirectView getServiceProviderCatalogs(HttpServletResponse response) throws IOException, URISyntaxException
+    @RequestMapping("")
+    public void getServiceProviderCatalogs(HttpServletResponse httpServletResponse) throws IOException, URISyntaxException
     {
-        String forwardUri = uriInfo.getAbsolutePath() + "/singleton";
-        response.sendRedirect(forwardUri);
-        return new RedirectView(forwardUri);
+        String uriInfo = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
+        String forwardUri = uriInfo + "/singleton";
+        System.out.println(forwardUri);
+        httpServletResponse.sendRedirect(forwardUri);
+//        return httpServletResponse.sendRedirect(new URI(forwardUri)).build();
+
     }
 
-    @GetMapping("{serviceProviderCatalogId}") // Required to distinguish from array result.  But, ignored.
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
-    public ServiceProviderCatalog getServiceProviderCatalog()
+//    @RequestMapping("/{serviceProviderCatalogId}") // Required to distinguish from array result.  But, ignored.
+//    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
+//    public ServiceProviderCatalog getServiceProviderCatalog(
+//            HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+//    {
+//        ServiceProviderCatalog catalog =  ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
+//
+//        if (catalog != null) {
+//
+//            httpServletResponse.addHeader("OSLC-Core-Version","2.0");
+//            return catalog;
+//        }
+//
+//        throw new WebApplicationException(Response.Status.NOT_FOUND);
+//    }
+    @RequestMapping("{serviceProviderId}")
+    @Produces(MediaType.TEXT_HTML)
+    public ServiceProvider getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId,
+    HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Model model)
     {
-        ServiceProviderCatalog catalog =  ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
+        ServiceProviderCatalog catalog = ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
 
-        if (catalog != null) {
-
-            httpServletResponse.addHeader(NsConstant.HDR_OSLC_VERSION,"2.0");
-            return catalog;
+        model.addAttribute("catalog", catalog);
+        System.out.println(catalog.getAbout());
+        for(ServiceProvider sc : catalog.getServiceProviders()) {
+            System.out.println(sc.getAbout());
+            return  sc;
+//            for (Service ss : sc.getServices()) {
+//                System.out.println(ss.getAbout());
+//            } todo
         }
-
-        throw new WebApplicationException(Response.Status.NOT_FOUND);
+//        return catalog;
+        return null;
     }
-
 
 //    @GetMapping("{someId}")
 //    @Produces(MediaType.TEXT_HTML)

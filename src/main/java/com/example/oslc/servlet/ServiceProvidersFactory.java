@@ -28,7 +28,7 @@ import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.*;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -56,6 +56,9 @@ public class ServiceProvidersFactory
         String instanceURI = "serviceProviders/{serviceProviderId}";
 
         System.out.println("basePath: " + basePath);
+        if(basePath == null) {
+            basePath = "services/";
+        }
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
@@ -83,6 +86,9 @@ public class ServiceProvidersFactory
         URI serviceProviderURI = constructURI(serviceProviderInfo);
         String identifier = constructIdentifier(serviceProviderInfo);
         String basePath = OSLC4JUtils.getServletURI();
+        if(basePath == null) {
+            basePath = "services/";
+        }
         String title = serviceProviderInfo.name;
         String description = String.format("%s (id: %s; kind: %s)",
                 "Service Provider for the RM domain resources",
@@ -123,7 +129,8 @@ public class ServiceProvidersFactory
         serviceProvider.setCreated(new Date());
         serviceProvider.setDetails(new URI[] {serviceProviderURI});
 
-        // Start of user code finalize
+        // Start of user code finalize todo serviceProvider - service
+
         // End of user code
         return serviceProvider;
     }
