@@ -89,10 +89,9 @@ public class ServiceProviderCatalogController  {
         System.out.println(catalog.getAbout());
         for(ServiceProvider sc : catalog.getServiceProviders()) {
             System.out.println(sc.getAbout());
-            return  sc;
-//            for (Service ss : sc.getServices()) {
-//                System.out.println(ss.getAbout());
-//            } todo
+            for (Service ss : sc.getServices()) {
+                System.out.println(ss);
+            }
         }
 //        return catalog;
         return null;

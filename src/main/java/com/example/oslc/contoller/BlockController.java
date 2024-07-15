@@ -6,12 +6,10 @@ import com.example.oslc.constant.NsConstant;
 import com.example.oslc.resource.BlockResource;
 import com.example.oslc.service.BlockService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -36,7 +34,7 @@ import java.net.URISyntaxException;
 @OslcService(NsConstant.BLOCK_NAMESPACE)
 @RequestMapping("/{productId}/block")
 @RestController
-public class BlockContoller {
+public class  BlockController {
 
     @Autowired
     private BlockService blockService;

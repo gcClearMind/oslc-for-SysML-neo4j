@@ -19,7 +19,7 @@
  *******************************************************************************/
 package com.example.oslc.servlet;
 
-import com.example.oslc.contoller.BlockContoller;
+import com.example.oslc.contoller.BlockController;
 import com.example.oslc.info.ServiceProviderInfo;
 import org.eclipse.lyo.oslc.domains.DctermsDomainConstants;
 import org.eclipse.lyo.oslc.domains.FoafDomainConstants;
@@ -37,10 +37,10 @@ import java.util.Map;
 
 public class ServiceProvidersFactory
 {
-    private static Class<?>[] RESOURCE_CLASSES =
-    {
-        BlockContoller.class
-    };
+//    private static Class<?>[] RESOURCE_CLASSES =
+//    {
+//        BlockContoller.class
+//    };
 
     private ServiceProvidersFactory()
     {
@@ -78,6 +78,10 @@ public class ServiceProvidersFactory
         return constructIdentifier(serviceProviderInfo.serviceProviderId);
     }
 
+    private static Class<?>[] RESOURCE_CLASSES =
+            {
+                    BlockController.class
+            };
 
     public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
             throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {
@@ -134,4 +138,37 @@ public class ServiceProvidersFactory
         // End of user code
         return serviceProvider;
     }
+
+//    public static ServiceProvider initServiceProvider(ServiceProvider serviceProvider, String baseURI, String genericBaseURI, String title, String description, Publisher publisher, Class<?>[] resourceClasses, Map<String, Object> pathParameterValues) throws OslcCoreApplicationException, URISyntaxException {
+//        serviceProvider.setTitle(title);
+//        serviceProvider.setDescription(description);
+//        serviceProvider.setPublisher(publisher);
+//
+//        Map<String, Service> serviceMap = new HashMap<>();
+//        for (Class<?> resourceClass : resourceClasses) {
+//            OslcService serviceAnnotation = resourceClass.getAnnotation(OslcService.class);
+//            if (serviceAnnotation == null) {
+//                throw new OslcCoreMissingAnnotationException(resourceClass, OslcService.class);
+//            }
+//
+//            String domain = serviceAnnotation.value();
+//            Service service = serviceMap.computeIfAbsent(domain, k -> {
+//                try {
+//                    return new Service(new URI(domain));
+//                } catch (URISyntaxException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            });
+//
+//            Map<String, Object> initPathParameterValues = pathParameterValues != null ? pathParameterValues : new HashMap<>();
+//            handleResourceClass(baseURI, genericBaseURI, resourceClass, service, initPathParameterValues);
+//        }
+//
+//        for (Service service : serviceMap.values()) {
+//            serviceProvider.addService(service);
+//        }
+//
+//        return serviceProvider;
+//    }
+
 }

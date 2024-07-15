@@ -23,7 +23,7 @@
 
 package com.example.oslc.servlet;
 
-import com.example.oslc.contoller.BlockContoller;
+import com.example.oslc.contoller.BlockController;
 import com.example.oslc.service.ServiceProviderCatalogService;
 import com.example.oslc.service.ServiceProviderService;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
@@ -78,7 +78,7 @@ public class Application extends jakarta.ws.rs.core.Application {
     {
         RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
         RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
-        RESOURCE_CLASSES.add(BlockContoller.class);
+        RESOURCE_CLASSES.add(BlockController.class);
 
         // Catalog resources
         RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
