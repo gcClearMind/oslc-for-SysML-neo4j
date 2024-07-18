@@ -37,10 +37,10 @@ import java.util.Map;
 
 public class ServiceProvidersFactory
 {
-//    private static Class<?>[] RESOURCE_CLASSES =
-//    {
-//        BlockContoller.class
-//    };
+    private static Class<?>[] RESOURCE_CLASSES =
+    {
+        BlockController.class
+    };
 
     private ServiceProvidersFactory()
     {
@@ -78,10 +78,6 @@ public class ServiceProvidersFactory
         return constructIdentifier(serviceProviderInfo.serviceProviderId);
     }
 
-    private static Class<?>[] RESOURCE_CLASSES =
-            {
-                    BlockController.class
-            };
 
     public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
             throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {

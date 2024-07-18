@@ -53,7 +53,7 @@ import java.util.Optional;
  * See getConfigurationProperty() for the different alternatives to set this base URI. 
  */
 
-@Component
+@WebListener
 public class ServletListener implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(ServletListener.class);
 

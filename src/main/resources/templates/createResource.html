@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create ExcelSimpleResource</title>
+    <link rel="stylesheet" type="text/css" href="/css/createResource.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Create ExcelSimpleResource</h2>
+        <form id="createForm"  th:action="@{/createResource}" method="post">
+            <div class="form-group">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div class="form-group">
+                <label for="text">Text:</label>
+                <input type="text" id="text" name="text">
+            </div>
+            <div class="form-group">
+                <label for="associatedId">Associated ID:</label>
+                <input type="text" id="associatedId" name="associatedId">
+            </div>
+            <input type="submit" value="Create Resource">
+        </form>
+    </div>
+</body>
+</html>

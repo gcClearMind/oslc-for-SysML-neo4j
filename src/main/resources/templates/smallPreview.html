@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Small Preview</title>
+    <style>
+        .container {
+            position: absolute;
+            top: 5px;
+            left:5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+        .item {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="item"><strong>Id:</strong> <span th:text="${resource.id}"></span></div>
+    <div class="item"><strong>Name:</strong> <span th:text="${resource.name}"></span></div>
+</div>
+</body>
+</html>

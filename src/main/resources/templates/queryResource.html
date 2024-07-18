@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询功能界面</title>
+    <link rel="stylesheet" href="/css/queryResource.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>资源查询</h1>
+    <div class="card">
+        <div class="search-section">
+            <label for="id-search">按ID查询：</label>
+            <div class="input-group">
+                <input type="text" id="id-search" placeholder="输入ID">
+                <button onclick="searchById()">查询</button>
+            </div>
+        </div>
+        <div class="search-section">
+            <label for="keyword-search">按资源文本关键词检索：</label>
+            <div class="input-group">
+                <input type="text" id="keyword-search" placeholder="输入关键词">
+                <button onclick="searchByKeyword()">检索</button>
+            </div>
+        </div>
+        <div class="search-section">
+            <label for="associated-id-select">关联ID值筛选：
+                <select id="associated-id-select">
+                    <option value="none">None</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="results">
+        <h2>查询结果：</h2>
+        <ul id="results-list"></ul>
+    </div>
+    <div class="pagination" id="pagination"></div>
+</div>
+<script src="/js/queryResource.js"></script>
+</body>
+</html>

@@ -19,6 +19,8 @@ public class NsConstant {
     //------------------------------CLASS------------------------------
     public final static String BLOCK_NAMESPACE = "localhost:8080/neo4j/neo4j-vocab#Block";
 
+    public final static String PATH_BLOCK = "Block";
+
 
 
     //----------------------------Property------------------------------

@@ -43,9 +43,9 @@ public class  BlockController {
             {
                     @OslcDialog
                             (
-                                    title = "Change Request Selection Dialog",
-                                    label = "Change Request Selection Dialog",
-                                    uri = "/{productId}/changeRequests/selector",
+                                    title = "Block Selection Dialog",
+                                    label = "Block Selection Dialog",
+                                    uri = "/{productId}/block/selector",
                                     hintWidth = "525px",
                                     hintHeight = "325px",
                                     resourceTypes = {NsConstant.BLOCK_NAMESPACE},
@@ -55,9 +55,9 @@ public class  BlockController {
             })
     @OslcQueryCapability
             (
-                    title = "Change Request Query Capability",
-                    label = "Change Request Catalog Query",
-                    resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + "block",
+                    title = "Block Query Capability",
+                    label = "Block Catalog Query",
+                    resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_BLOCK,
                     resourceTypes = {NsConstant.BLOCK_NAMESPACE},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )

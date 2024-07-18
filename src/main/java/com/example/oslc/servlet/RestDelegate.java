@@ -154,7 +154,7 @@ public class RestDelegate {
         // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)" todo add serviceProvider
         ServiceProviderInfo spInfo = new ServiceProviderInfo();
         spInfo.serviceProviderId = SP_DEFAULT;
-        spInfo.name = "Default ServiceProvider";
+        spInfo.name = "Block ServiceProvider";
         serviceProviderInfos = new ServiceProviderInfo[] {spInfo};
         // End of user code
 

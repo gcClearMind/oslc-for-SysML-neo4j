@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ServiceProviderCatalog</title>
+</head>
+<body>
+    <div id="container">
+        <table>
+            <tr>
+                <td><b>This document</b>:</td>
+                <td><a th:href="${catalog.getAbout()}">
+                    <%= catalog.getAbout().toString() %>
+                </a></td>
+            </tr>
+        </table>
+
+        <h2>Service Providers</h2>
+
+        <table>
+            <tr th:each="s:${catalog.getServiceProviders()}">
+                <td>Service Provider for Product <span th:text="${s.getTitle()}"></span></td>
+                <td><p><a th:href="${s.getAbout()}"><span th:text="${s.getAbout()}"></span></a></p></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

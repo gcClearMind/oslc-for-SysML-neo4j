@@ -80,8 +80,9 @@ public class ServiceProviderCatalogController  {
 //    }
     @RequestMapping("{serviceProviderId}")
     @Produces(MediaType.TEXT_HTML)
-    public ServiceProvider getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId,
-    HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Model model)
+    public String getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId,
+                                         HttpServletRequest httpServletRequest,
+                                         Model model)
     {
         ServiceProviderCatalog catalog = ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
 
@@ -94,7 +95,7 @@ public class ServiceProviderCatalogController  {
             }
         }
 //        return catalog;
-        return null;
+        return "ServiceProviderCatalog";
     }
 
 //    @GetMapping("{someId}")

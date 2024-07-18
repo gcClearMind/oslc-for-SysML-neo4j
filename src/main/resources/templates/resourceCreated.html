@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resource Created</title>
+    <link rel="stylesheet" type="text/css" href="/css/createResource.css">
+</head>
+<body>
+<div class="container">
+    <h2>Resource Created</h2>
+    <!-- 显示创建的资源的详细信息 -->
+    <p><strong>ID:</strong> <span th:text="${resource.id}"></span></p>
+    <p><strong>Text:</strong> <span th:text="${resource.text}"></span></p>
+    <p><strong>Associated ID:</strong> <span th:text="${resource.associatedId}"></span></p>
+</div>
+</body>
+</html>
+

@@ -228,8 +228,8 @@ public class ServiceProviderCatalogSingleton
     {
         try {
             // Start of user code initServiceProviders
-            serviceProviderCatalog.setTitle("RM Service Provider Catalog");
-            serviceProviderCatalog.setDescription("Service Provider Catalog for the Requirements Management Server");
+            serviceProviderCatalog.setTitle("OSlC for SysML-neo4j Provider Catalog");
+            serviceProviderCatalog.setDescription("Service Provider Catalog for the SysML-neo4j Provider Server");
             // End of user code
 
             ServiceProviderInfo[] serviceProviderInfos = RestDelegate.getServiceProviderInfos(httpServletRequest);
