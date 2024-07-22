@@ -10,7 +10,7 @@
             <tr>
                 <td><b>This document</b>:</td>
                 <td><a th:href="${catalog.getAbout()}">
-                    <%= catalog.getAbout().toString() %>
+                    <span th:text="${catalog.getAbout().toString()}"></span>
                 </a></td>
             </tr>
         </table>

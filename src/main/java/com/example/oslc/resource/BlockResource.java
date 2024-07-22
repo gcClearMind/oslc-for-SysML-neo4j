@@ -3,7 +3,10 @@ import com.example.oslc.constant.NsConstant;
 import org.eclipse.lyo.oslc4j.core.annotation.*;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import org.eclipse.lyo.oslc4j.core.model.Occurs;
+import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
+
+import java.net.URI;
 
 @OslcNamespace(NsConstant.oslc_neo4j_namespace)
 @OslcName("BLock")
@@ -18,6 +21,8 @@ public class BlockResource extends AbstractResource {
     private String XmiId;
 
     private String visibility;
+
+    private URI serviceProvider;
 
     public BlockResource(){
         super();
@@ -94,6 +99,20 @@ public class BlockResource extends AbstractResource {
 
     public void setVisibility(String visibility) {
         this.visibility = visibility;
+    }
+
+
+    @OslcDescription("The scope of a resource is a URI for the resource's OSLC Service Provider.")
+    @OslcPropertyDefinition(OslcConstants.OSLC_CORE_NAMESPACE + "serviceProvider")
+    @OslcRange(OslcConstants.TYPE_SERVICE_PROVIDER)
+    @OslcTitle("Service Provider")
+    public URI getServiceProvider()
+    {
+        return serviceProvider;
+    }
+    public void setServiceProvider(final URI serviceProvider)
+    {
+        this.serviceProvider = serviceProvider;
     }
 
     @Override

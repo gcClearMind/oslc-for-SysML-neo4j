@@ -1,12 +1,7 @@
 spring:
   thymeleaf:
-    prefix: /templates/
+    prefix: classpath:/templates/
     suffix: .html
-  neo4j:
-    uri: bolt://localhost:7687
-    authentication:
-      username: neo4j
-      password: 12345678
 
 
 spring.devtools:
@@ -17,6 +12,11 @@ server:
   servlet:
     context-path: /oslc
   port: 8081
+
+logging:
+  level:
+    root: INFO
+
 
 data:
   path: localhost:8080/neo4j

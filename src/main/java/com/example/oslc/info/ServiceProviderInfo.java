@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ServiceProviderInfo {
     public String name;
-    public String serviceProviderId;
+    public String ServiceProviderId;
 
     // Start of user code class_attributes
     // End of user code

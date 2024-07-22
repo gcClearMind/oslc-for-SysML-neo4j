@@ -30,14 +30,13 @@ import org.slf4j.LoggerFactory;
 
 
 import jakarta.ws.rs.core.UriBuilder;
-
-
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.ServletRegistration;
-import jakarta.servlet.annotation.WebListener;
-import jakarta.servlet.ServletContext;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebListener;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -59,10 +58,6 @@ public class ServletListener implements ServletContextListener {
 
     // Start of user code class_attributes
     // End of user code
-
-    public ServletListener() {
-        super();
-    }
 
     @Override
     public void contextInitialized(final ServletContextEvent servletContextEvent)

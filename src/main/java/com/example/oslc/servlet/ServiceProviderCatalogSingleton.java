@@ -28,6 +28,7 @@
 package com.example.oslc.servlet;
 
 import com.example.oslc.info.ServiceProviderInfo;
+import org.eclipse.lyo.oslc4j.client.ServiceProviderRegistryURIs;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
@@ -74,10 +75,15 @@ public class ServiceProviderCatalogSingleton
         String ServletURI = OSLC4JUtils.getServletURI();
         System.out.println("ServletURI: " + ServletURI);
         if(ServletURI == null) {
-            ServletURI = "services/";
+            ServletURI = "";
         }
         URI catalogUri = UriBuilder.fromUri(ServletURI).path("/catalog/singleton").build();
         serviceProviderCatalog.setAbout(catalogUri);
+//        try {
+//            serviceProviderCatalog.setAbout(new URI(ServiceProviderRegistryURIs.getServiceProviderRegistryURI()));
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
         serviceProviderCatalog.setTitle("Service Provider Catalog");
         serviceProviderCatalog.setDescription("Service Provider Catalog");
         

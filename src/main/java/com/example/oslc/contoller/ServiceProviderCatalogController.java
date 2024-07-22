@@ -7,31 +7,30 @@ import org.eclipse.lyo.oslc4j.core.annotation.OslcQueryCapability;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
 import org.eclipse.lyo.oslc4j.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.GET;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
-@RestController
-@RequestMapping("/catalog")
+@Controller
+@RequestMapping("services/catalog")
 public class ServiceProviderCatalogController  {
 
     @OslcDialog
@@ -52,7 +51,8 @@ public class ServiceProviderCatalogController  {
                     resourceTypes = {OslcConstants.TYPE_SERVICE_PROVIDER_CATALOG},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
-    @RequestMapping("")
+
+    @GetMapping("")
     public void getServiceProviderCatalogs(HttpServletResponse httpServletResponse) throws IOException, URISyntaxException
     {
         String uriInfo = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
@@ -78,9 +78,10 @@ public class ServiceProviderCatalogController  {
 //
 //        throw new WebApplicationException(Response.Status.NOT_FOUND);
 //    }
-    @RequestMapping("{serviceProviderId}")
-    @Produces(MediaType.TEXT_HTML)
-    public String getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId,
+
+    @GetMapping("{serviceProviderId}")
+//    @Produces(MediaType.TEXT_HTML)
+    public String getHtmlServiceProvider(@PathVariable("serviceProviderId") final String serviceProviderId,
                                          HttpServletRequest httpServletRequest,
                                          Model model)
     {

@@ -288,11 +288,11 @@
             <artifactId>oslc4j-core</artifactId>
             <version>${version.lyo}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.eclipse.lyo.oslc4j.core</groupId>-->
-<!--            <artifactId>oslc4j-wink</artifactId>-->
-<!--            <version>2.2.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.eclipse.lyo.oslc4j.core</groupId>
+            <artifactId>oslc4j-wink</artifactId>
+            <version>4.1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.lyo.oslc4j.core</groupId>
             <artifactId>oslc4j-jena-provider</artifactId>

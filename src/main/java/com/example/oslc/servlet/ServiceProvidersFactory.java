@@ -65,7 +65,7 @@ public class ServiceProvidersFactory
 
     public static URI constructURI(final ServiceProviderInfo serviceProviderInfo)
     {
-        return constructURI(serviceProviderInfo.serviceProviderId);
+        return constructURI(serviceProviderInfo.ServiceProviderId);
     }
 
     public static String constructIdentifier(final String serviceProviderId)
@@ -75,7 +75,7 @@ public class ServiceProvidersFactory
 
     public static String  constructIdentifier(final ServiceProviderInfo serviceProviderInfo)
     {
-        return constructIdentifier(serviceProviderInfo.serviceProviderId);
+        return constructIdentifier(serviceProviderInfo.ServiceProviderId);
     }
 
 
@@ -85,27 +85,33 @@ public class ServiceProvidersFactory
         // End of user code
         URI serviceProviderURI = constructURI(serviceProviderInfo);
         String identifier = constructIdentifier(serviceProviderInfo);
-        String basePath = OSLC4JUtils.getServletURI();
-        if(basePath == null) {
-            basePath = "services/";
+        String ServletURI = OSLC4JUtils.getServletURI();
+        if(ServletURI == null) {
+            ServletURI = "";
         }
         String title = serviceProviderInfo.name;
         String description = String.format("%s (id: %s; kind: %s)",
-                "Service Provider for the RM domain resources",
+                "Service Provider for the neo4j-SysML resources",
                 identifier,
                 "RM Service Provider");
         Publisher publisher = null;
         Map<String, Object> parameterMap = new HashMap<String, Object>();
-        parameterMap.put("serviceProviderId", serviceProviderInfo.serviceProviderId);
+        parameterMap.put("productId", serviceProviderInfo.ServiceProviderId);
 
-        ServiceProvider serviceProvider = org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory.createServiceProvider(basePath,
+//        ServiceProvider serviceProvider = org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory.createServiceProvider(ServletURI,
+//                "",
+//                title,
+//                description,
+//                publisher,
+//                RESOURCE_CLASSES,
+//                parameterMap);
+        ServiceProvider serviceProvider = ServiceProviderFactory.createServiceProvider(ServletURI,
                 "",
                 title,
                 description,
                 publisher,
                 RESOURCE_CLASSES,
                 parameterMap);
-
         final PrefixDefinition[] prefixDefinitions =
                 {
                         new PrefixDefinition(OslcConstants.DCTERMS_NAMESPACE_PREFIX, new URI(OslcConstants.DCTERMS_NAMESPACE)),

@@ -9,31 +9,33 @@ import com.example.oslc.service.BlockService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
 
-import jakarta.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.lyo.oslc4j.core.annotation.OslcDialog;
-import org.eclipse.lyo.oslc4j.core.annotation.OslcDialogs;
-import org.eclipse.lyo.oslc4j.core.annotation.OslcQueryCapability;
-import org.eclipse.lyo.oslc4j.core.annotation.OslcService;
+import org.eclipse.lyo.oslc4j.core.annotation.*;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 
-@OslcService(NsConstant.BLOCK_NAMESPACE)
-@RequestMapping("/{productId}/block")
-@RestController
+@OslcService(NsConstant.oslc_neo4j_namespace)
+@RequestMapping("/{productId}/Blocks")
+@Controller
 public class  BlockController {
 
     @Autowired
@@ -45,7 +47,7 @@ public class  BlockController {
                             (
                                     title = "Block Selection Dialog",
                                     label = "Block Selection Dialog",
-                                    uri = "/{productId}/block/selector",
+                                    uri = "/{productId}/Blocks/selector",
                                     hintWidth = "525px",
                                     hintHeight = "325px",
                                     resourceTypes = {NsConstant.BLOCK_NAMESPACE},
@@ -62,28 +64,56 @@ public class  BlockController {
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
 
+    @ResponseBody
     @GetMapping("")
-    public void getAllBlock(HttpServletResponse httpServletResponse) throws IOException {
-        String uriInfo = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
-        String forwardUri = uriInfo + "/getAllBlockResourceURI";
-        System.out.println(forwardUri);
-        httpServletResponse.sendRedirect(forwardUri);
+    public List<BlockResource> getAllBlocks(@PathVariable String productId,
+                                    HttpServletRequest httpServletRequest) throws IOException {
+        return blockService.getAllBlockResources(httpServletRequest, productId);
     }
 
-    @GetMapping("/getAllBlockResourceURI")
-    public Object getAllBlockResourceURI()  {
-        return JSON.toJSON(blockService.getAllResourceURIs());
+    @OslcDialog
+            (
+                    title = "Change Request Creation Dialog",
+                    label = "Change Request Creation Dialog",
+                    uri = "/{productId}/Blocks/creator",
+                    hintWidth = "600px",
+                    hintHeight = "375px",
+                    resourceTypes = {NsConstant.BLOCK_NAMESPACE},
+                    usages = {OslcConstants.OSLC_USAGE_DEFAULT}
+            )
+    @OslcCreationFactory
+            (
+                    title = "Change Request Creation Factory",
+                    label = "Change Request Creation",
+                    resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_BLOCK},
+                    resourceTypes = {NsConstant.BLOCK_NAMESPACE},
+                    usages = {OslcConstants.OSLC_USAGE_DEFAULT}
+            )
+
+    @PostMapping
+    public Response addResource(@PathVariable final String productId,
+                                final BlockResource blockResource) throws IOException, ServletException {
+        return null;
     }
 
 
 
-    @GetMapping("/selector")
-    @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
-    public String BlockSelector(@QueryParam("terms")     final String terms,
-                                      @PathParam("productId")  final String productId,
-                                      HttpServletRequest httpServletRequest,
-                                      HttpServletResponse httpServletResponse,
-                                      Model model) throws ServletException, IOException
+
+    @GetMapping("/{BlockId}")
+    public BlockResource getBlockById(@PathVariable String productId,
+                                      @PathVariable String BlockId,
+                                      HttpServletRequest httpServletRequest) throws IOException {
+        return blockService.getResourceById(httpServletRequest, productId, BlockId);
+    }
+
+
+
+    @GetMapping(value = "/selector", consumes = { MediaType.TEXT_HTML, MediaType.WILDCARD })
+    public String BlockSelector(@RequestParam("keyword")     final String keyword,
+                                @PathVariable String productId,
+                                HttpServletRequest httpServletRequest,
+                                HttpServletResponse httpServletResponse,
+                                Model model) throws ServletException, IOException
     {
         int productIdNum = Integer.parseInt(productId);
 //        httpServletRequest.setAttribute("productId", productIdNum);
@@ -93,23 +123,28 @@ public class  BlockController {
         model.addAttribute("productId", productIdNum);
         model.addAttribute("HostUri", NsConstant.data_path);
         model.addAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
-        if (terms != null ) {
-//            httpServletRequest.setAttribute("terms", terms);
-            model.addAttribute("terms", terms);
-            return "error";
-        } else {
-            return "selector";
-        }
+
+
+        return "SelectResource";
+
     }
 
 
-    @GetMapping("{changeRequestId}/smallPreview")
-    @Produces({ MediaType.TEXT_HTML })
-    public String smallPreview(@PathParam("productId")       final String productId,
-                             @PathParam("blockId") final String blockId,
-                             Model model) throws ServletException, IOException, URISyntaxException
+    @PostMapping(value = "creator", consumes = {javax.ws.rs.core.MediaType.WILDCARD })
+    public String BlockResourceCreator(@PathVariable String productId,
+                                     Model model){
+        model.addAttribute("blockResource", new BlockResource());
+        return "createResource";
+    }
+
+
+    @GetMapping(value = "{blockId}/smallPreview", produces = {MediaType.TEXT_HTML})
+    public String smallPreview(@PathVariable("productId")       final String productId,
+                               @PathVariable("blockId") final String blockId,
+                               HttpServletRequest httpServletRequest,
+                               Model model)
     {
-        BlockResource resource = blockService.getResourceById(blockId);
+        BlockResource resource = blockService.getResourceById(httpServletRequest, productId, blockId);
         model.addAttribute("resource", resource);
         return "smallPreview";
     }
