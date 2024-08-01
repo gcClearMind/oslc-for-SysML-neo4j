@@ -32,10 +32,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-
-@OslcService(NsConstant.oslc_neo4j_namespace)
-@RequestMapping("/{productId}/Blocks")
 @Controller
+@OslcService(NsConstant.oslc_neo4j_namespace)
+@RequestMapping("services/{productId}/Blocks")
+
 public class  BlockController {
 
     @Autowired
@@ -90,25 +90,27 @@ public class  BlockController {
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
 
-    @PostMapping
-    public Response addResource(@PathVariable final String productId,
+    @ResponseBody
+    @PostMapping("")
+    public String addResource(@PathVariable final String productId,
                                 final BlockResource blockResource) throws IOException, ServletException {
         return null;
     }
 
 
 
+//
+//    @GetMapping("/{BlockId}")
+//    public BlockResource getBlockById(@PathVariable String productId,
+//                                      @PathVariable String BlockId,
+//                                      HttpServletRequest httpServletRequest) throws IOException {
+//        return blockService.getResourceById(httpServletRequest, productId, BlockId);
+//    }
 
-    @GetMapping("/{BlockId}")
-    public BlockResource getBlockById(@PathVariable String productId,
-                                      @PathVariable String BlockId,
-                                      HttpServletRequest httpServletRequest) throws IOException {
-        return blockService.getResourceById(httpServletRequest, productId, BlockId);
-    }
 
 
-
-    @GetMapping(value = "/selector", consumes = { MediaType.TEXT_HTML, MediaType.WILDCARD })
+    @ResponseBody
+    @GetMapping(value = "/selector")
     public String BlockSelector(@RequestParam("keyword")     final String keyword,
                                 @PathVariable String productId,
                                 HttpServletRequest httpServletRequest,
@@ -120,9 +122,9 @@ public class  BlockController {
 //        httpServletRequest.setAttribute("HostUri", NsConstant.data_path);
 //        httpServletRequest.setAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
 
-        model.addAttribute("productId", productIdNum);
-        model.addAttribute("HostUri", NsConstant.data_path);
-        model.addAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
+//        model.addAttribute("productId", productIdNum);
+//        model.addAttribute("HostUri", NsConstant.data_path);
+//        model.addAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
 
 
         return "SelectResource";
@@ -130,10 +132,11 @@ public class  BlockController {
     }
 
 
-    @PostMapping(value = "creator", consumes = {javax.ws.rs.core.MediaType.WILDCARD })
+    @ResponseBody
+    @PostMapping(value = "/creator")
     public String BlockResourceCreator(@PathVariable String productId,
                                      Model model){
-        model.addAttribute("blockResource", new BlockResource());
+//        model.addAttribute("blockResource", new BlockResource());
         return "createResource";
     }
 

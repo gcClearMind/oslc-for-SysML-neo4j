@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48bed9a1-3d65-469d-94d6-0b5b42606ca1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/TestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/MyServletContextListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProviderFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/SelectResource.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/ServiceProvider.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/BlockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/BlockController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/ServiceProviderCatalogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/ServiceProviderCatalogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/ServiceProviderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/contoller/ServiceProviderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/info/ServiceProviderInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/info/ServiceProviderInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/resource/BlockResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/resource/BlockResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/service/BlockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/service/BlockService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/service/ServiceProviderService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/RestDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/RestDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProviderCatalogSingleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProviderCatalogSingleton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProvidersFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProvidersFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServletListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServletListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ServiceProviderCatalog.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ServiceProviderCatalog.html" afterDir="false" />
-    </list>
+    <list default="true" id="48bed9a1-3d65-469d-94d6-0b5b42606ca1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,9 +27,9 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="localRepository" value="C:\Users\86198\.m2\repository" />
-        <option name="mavenHome" value="G:\Maven\apache-maven-3.9.4" />
-        <option name="userSettingsFile" value="G:\Maven\apache-maven-3.9.4\conf\settings.xml" />
+        <option name="localRepository" value="C:\Users\29615\.m2\repository" />
+        <option name="mavenHome" value="D:\Maven\apache-maven-3.9.8" />
+        <option name="userSettingsFile" value="D:\Maven\apache-maven-3.9.8\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -86,7 +63,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "G:/Users/86198/Documents/GitHub/oslc-for-SysML-neo4j",
+    "last_opened_file_path": "D:/GitHub/neo4j",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -135,11 +112,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="neo4jUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.oslc.util.neo4jUtil" />
       <module name="oslc-for-SysML-neo4j" />
@@ -176,7 +148,7 @@
     </configuration>
     <configuration name="Neo4jApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="oslc-for-SysML-neo4j" />
+      <module name="neo4j-for-SysML-neo4j" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.oslc.Neo4jApplication" />
       <extension name="coverage">
         <pattern>
@@ -201,7 +173,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-f644763e9732-24fca987" />
+        <option value="jdk-17.0.9-corretto-17.0.9-f644763e9732-ebaef533" />
       </set>
     </attachedChunks>
   </component>
@@ -240,6 +212,9 @@
       <workItem from="1721459753975" duration="11201000" />
       <workItem from="1721562973473" duration="15372000" />
       <workItem from="1721616128346" duration="2368000" />
+      <workItem from="1721623425106" duration="367000" />
+      <workItem from="1721623801663" duration="866000" />
+      <workItem from="1721625733484" duration="2051000" />
     </task>
     <servers />
   </component>
@@ -264,11 +239,6 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/oslc/servlet/ServiceProviderCatalogSingleton.java</url>
-          <line>186</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Test.java</url>
           <line>19</line>
