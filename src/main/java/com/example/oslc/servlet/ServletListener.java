@@ -78,7 +78,7 @@ public class ServletListener implements ServletContextListener {
 
         UriBuilder builder = UriBuilder.fromUri(basePathProperty);
         String baseUrl = builder.path(servletContext.getContextPath()).build().toString();
-        String servletUrlPattern = "services/";
+        String servletUrlPattern = "/";
         try {
             servletUrlPattern = getServletUrlPattern(servletContextEvent, servletName);
         } catch (Exception e1) {

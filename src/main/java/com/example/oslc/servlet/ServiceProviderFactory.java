@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -150,14 +151,14 @@ public final class ServiceProviderFactory {
     }
 
     static CreationFactory createCreationFactory(String baseURI, Map<String, Object> pathParameterValues, Method method) throws URISyntaxException {
-        Path classPathAnnotation = (Path) method.getDeclaringClass().getAnnotation(Path.class);
+        RequestMapping classPathAnnotation = (RequestMapping) method.getDeclaringClass().getAnnotation(RequestMapping.class);
         OslcCreationFactory creationFactoryAnnotation = (OslcCreationFactory) method.getAnnotation(OslcCreationFactory.class);
-        Path methodPathAnnotation = (Path) method.getAnnotation(Path.class);
+        RequestMapping methodPathAnnotation = (RequestMapping) method.getAnnotation(RequestMapping.class);
         CreationFactory creationFactory = createCreationFactory(baseURI, pathParameterValues, classPathAnnotation, creationFactoryAnnotation, methodPathAnnotation);
         return creationFactory;
     }
 
-    static CreationFactory createCreationFactory(String baseURI, Map<String, Object> pathParameterValues, Path classPathAnnotation, OslcCreationFactory creationFactoryAnnotation, Path methodPathAnnotation) throws URISyntaxException {
+    static CreationFactory createCreationFactory(String baseURI, Map<String, Object> pathParameterValues, RequestMapping classPathAnnotation, OslcCreationFactory creationFactoryAnnotation, RequestMapping methodPathAnnotation) throws URISyntaxException {
         String title = creationFactoryAnnotation.title();
         String label = creationFactoryAnnotation.label();
         String[] resourceShapes = creationFactoryAnnotation.resourceShapes();
@@ -199,8 +200,15 @@ public final class ServiceProviderFactory {
         return creationFactory;
     }
 
-    private static String pathAnnotationStringValue(Path pathAnnotation) {
-        return pathAnnotation == null ? null : pathAnnotation.value();
+    private static String pathAnnotationStringValue(RequestMapping pathAnnotation) {
+        if(pathAnnotation == null || pathAnnotation.value().length == 0) {
+            return null;
+        }
+        else {
+            String[]  values = pathAnnotation.value();
+            return values[0];
+        }
+
     }
 
     private static QueryCapability createQueryCapability(String baseURI, Method method, Map<String, Object> pathParameterValues) throws URISyntaxException {
@@ -211,8 +219,8 @@ public final class ServiceProviderFactory {
         String[] resourceTypes = queryCapabilityAnnotation.resourceTypes();
         String[] usages = queryCapabilityAnnotation.usages();
         String basePath = baseURI + "/";
-        Path classPathAnnotation = (Path) method.getDeclaringClass().getAnnotation(Path.class);
-        Path methodPathAnnotation = (Path) method.getAnnotation(Path.class);
+        RequestMapping classPathAnnotation = (RequestMapping) method.getDeclaringClass().getAnnotation(RequestMapping.class);
+        RequestMapping methodPathAnnotation = (RequestMapping) method.getAnnotation(RequestMapping.class);
         String query = resolvePathParameters(basePath, pathAnnotationStringValue(classPathAnnotation), pathAnnotationStringValue(methodPathAnnotation), pathParameterValues);
         QueryCapability queryCapability = new QueryCapability(title, (new URI(query)).normalize());
         if (label != null && label.length() > 0) {
@@ -261,12 +269,12 @@ public final class ServiceProviderFactory {
         String[] resourceTypes = dialogAnnotation.resourceTypes();
         String[] usages = dialogAnnotation.usages();
         String uri = "";
-        Path classPathAnnotation = (Path) method.getDeclaringClass().getAnnotation(Path.class);
+        RequestMapping classPathAnnotation = (RequestMapping) method.getDeclaringClass().getAnnotation(RequestMapping.class);
         if (dialogURI.length() > 0) {
             uri = resolvePathParameters(baseURI, (String) null, dialogURI, pathParameterValues);
         } else {
             uri = genericBaseURI + "/generic/generic" + dialogType + ".html";
-            Path methodPathAnnotation = (Path) method.getAnnotation(Path.class);
+            RequestMapping methodPathAnnotation = (RequestMapping) method.getAnnotation(RequestMapping.class);
             String parameter = resolvePathParameters(baseURI, pathAnnotationStringValue(classPathAnnotation), pathAnnotationStringValue(methodPathAnnotation), pathParameterValues);
 
             try {

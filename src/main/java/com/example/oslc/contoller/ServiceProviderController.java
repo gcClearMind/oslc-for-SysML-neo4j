@@ -23,7 +23,7 @@ import java.net.URI;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @Controller
-@RequestMapping("services/serviceProviders")
+@RequestMapping("serviceProviders")
 public class ServiceProviderController {
     @OslcDialog
             (

@@ -34,7 +34,7 @@ import java.util.List;
 
 @Controller
 @OslcService(NsConstant.oslc_neo4j_namespace)
-@RequestMapping("services/{productId}/Blocks")
+@RequestMapping("{productId}/Blocks")
 
 public class  BlockController {
 

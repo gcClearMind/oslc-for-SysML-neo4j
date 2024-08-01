@@ -10,7 +10,7 @@ spring.devtools:
 
 server:
   servlet:
-    context-path: /oslc
+    context-path: /oslc/services
   port: 8081
 
 logging:

@@ -30,7 +30,7 @@ import java.net.URISyntaxException;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @Controller
-@RequestMapping("services/catalog")
+@RequestMapping("catalog")
 public class ServiceProviderCatalogController  {
 
     @OslcDialog
