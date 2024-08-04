@@ -52,6 +52,7 @@ public class  BlockController {
                                     hintHeight = "325px",
                                     resourceTypes = {NsConstant.BLOCK_NAMESPACE},
                                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
+
                             )
 
             })
@@ -109,10 +110,9 @@ public class  BlockController {
 
 
 
-    @ResponseBody
+
     @GetMapping(value = "/selector")
-    public String BlockSelector(@RequestParam("keyword")     final String keyword,
-                                @PathVariable String productId,
+    public String BlockSelector(@PathVariable String productId,
                                 HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
                                 Model model) throws ServletException, IOException
@@ -127,7 +127,7 @@ public class  BlockController {
 //        model.addAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
 
 
-        return "SelectResource";
+        return "selectResource";
 
     }
 
@@ -153,4 +153,11 @@ public class  BlockController {
     }
 
 
+
+    @PostMapping("/queryResource")
+    public Object queryResourceById(
+            @RequestParam(name = "oslc.where", required = false, defaultValue = "") String oslcWhere) throws Exception {
+        // 返回查询到的资源的RDF数据
+        return null;
+    }
 }

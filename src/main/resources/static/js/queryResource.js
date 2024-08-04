@@ -4,8 +4,10 @@
  */
 function searchById() {
     const id = document.getElementById('id-search').value;
-    const baseUrl = 'http://localhost:8080/Excel/queryResource?oslc.where=';
-    const queryParam = 'oslc_ex:id=' + id;
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.match(/\/services\/([^\/]+)\/Blocks/);
+    const baseUrl = 'http://localhost:8081/oslc/services/' + productId + '/Blocks/queryResource?oslc.where=';
+    const queryParam = 'oslc_neo:id=' + id;
     const encodedQueryParam = encodeURIComponent(queryParam);  //对url进行编码
     const queryUrl =  baseUrl + encodedQueryParam;   // 构建完整的查询URL
 
@@ -22,7 +24,7 @@ function searchById() {
         .then(response => response.json())
         .then(data => {
              //向后端接口请求解析查询到的RDF结果
-            fetch("http://localhost:8080/Excel/parseQueryRdfResult",{
+            fetch("http://localhost:8081/oslc/services/" + productId + "/Blocks/parseQueryRdfResult",{
                 method: 'POST',
                 body: data.data
             })
@@ -46,8 +48,9 @@ function displayResults(results) {
     results.forEach(item => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
-        link.href = "http://localhost:8080/smallPreview/" + item.id;
-        link.textContent = item.text + ": " + item.resourceUri;
+        const productId = item.serviceProvider.match(/\/serviceProviders\/([^\/]+)/);
+        link.href = "http://localhost:8081/oslc/services/" + productId + "/Blocks/smallPreview/" + item.id;
+        link.textContent = item.text + ": " + item.about;
         listItem.appendChild(link);
         resultsList.appendChild(listItem);
     });
@@ -74,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * 获取下拉框可选的关联Id值
  */
 function fetchSelectData() {
-    fetch("http://localhost:8080/Excel/getAllResourcesIDs")
+    fetch("http://localhost:8081/Excel/getAllResourcesIDs")
         .then(response => response.json())
         .then(data => {
             const selectElement = document.getElementById('associated-id-select');

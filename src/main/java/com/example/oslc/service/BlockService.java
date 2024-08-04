@@ -81,7 +81,7 @@ public class BlockService {
 
         for(BlockResource resource : list) {
             resource.setServiceProvider(ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, productId).getAbout());
-            resource.setAbout(URI.create("123"));
+            resource.setAbout(getAboutURI(productId + "/Blocks/" + resource.getId()));
         }
 
 
