@@ -30,6 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -153,11 +154,15 @@ public class  BlockController {
     }
 
 
-
+    @ResponseBody
     @PostMapping("/queryResource")
-    public Object queryResourceById(
-            @RequestParam(name = "oslc.where", required = false, defaultValue = "") String oslcWhere) throws Exception {
+    public List<BlockResource> queryResourceById(@RequestParam(name = "oslc.where", required = false, defaultValue = "") String oslcWhere,
+                                    HttpServletRequest httpServletRequest,
+                                    @PathVariable("productId")       final String productId) throws Exception {
+        System.out.println("queryResource");
         // 返回查询到的资源的RDF数据
-        return null;
+        List<BlockResource> list = new ArrayList<>();
+        list.add(blockService.queryResourceById(oslcWhere, httpServletRequest, productId));
+        return list;
     }
 }

@@ -4,35 +4,29 @@
  */
 function searchById() {
     const id = document.getElementById('id-search').value;
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.match(/\/services\/([^\/]+)\/Blocks/);
-    const baseUrl = 'http://localhost:8081/oslc/services/' + productId + '/Blocks/queryResource?oslc.where=';
+    // const urlParams = new URLSearchParams(window.location.search);
+    const path = window.location.pathname;
+    const productIdMatch  = path.match(/\/services\/([^\/]+)\/Blocks/);
+    const productId = productIdMatch[1];
+    const baseUrl = "http://localhost:8081/oslc/services/" + productId + "/Blocks/queryResource?oslc.where=";
     const queryParam = 'oslc_neo:id=' + id;
     const encodedQueryParam = encodeURIComponent(queryParam);  //对url进行编码
     const queryUrl =  baseUrl + encodedQueryParam;   // 构建完整的查询URL
-
+    console.log(queryUrl)
     fetch(queryUrl, {
         method: 'POST',
         headers: {
-            //'Accept': 'application/rdf+xml',
-            // 如果请求体包含数据，需要在这里设置对应的Content-Type
+            // 'Accept': 'application/rdf+xml',
             // 'Content-Type': 'application/rdf+xml'
         },
-        // 如果需要附加额外的查询信息，可以放在body中
-        // body: ...
     })
         .then(response => response.json())
         .then(data => {
-             //向后端接口请求解析查询到的RDF结果
-            fetch("http://localhost:8081/oslc/services/" + productId + "/Blocks/parseQueryRdfResult",{
-                method: 'POST',
-                body: data.data
-            })
-                .then(response => response.json())
-                .then(data => {
-                    displayResults(data.data);
-                });
-        })
+            console.log(data);
+            displayResults(data);
+        }).catch(error => {
+        console.error('Error:', error);
+    });
 
 }
 
@@ -45,12 +39,16 @@ function searchById() {
 function displayResults(results) {
     const resultsList = document.getElementById('results-list');
     resultsList.innerHTML = '';
+    if(!Array.isArray(results)) {
+        console.log("error")
+    }
     results.forEach(item => {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
-        const productId = item.serviceProvider.match(/\/serviceProviders\/([^\/]+)/);
-        link.href = "http://localhost:8081/oslc/services/" + productId + "/Blocks/smallPreview/" + item.id;
-        link.textContent = item.text + ": " + item.about;
+        const productIdMatch = item.serviceProvider.match(/\/serviceProviders\/([^\/]+)/);
+        const productId = productIdMatch[1];
+        link.href = "http://localhost:8081/oslc/services/" + productId + "/Blocks/" + item.id + "/smallPreview";
+        link.textContent = item.name + ": " + item.about;
         listItem.appendChild(link);
         resultsList.appendChild(listItem);
     });

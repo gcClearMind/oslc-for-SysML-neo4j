@@ -79,7 +79,7 @@ public class ServiceProviderCatalogController  {
 //        throw new WebApplicationException(Response.Status.NOT_FOUND);
 //    }
 
-    @GetMapping("{serviceProviderId}")
+    @GetMapping("/{serviceProviderId}")
 //    @Produces(MediaType.TEXT_HTML)
     public String getHtmlServiceProvider(@PathVariable("serviceProviderId") final String serviceProviderId,
                                          HttpServletRequest httpServletRequest,

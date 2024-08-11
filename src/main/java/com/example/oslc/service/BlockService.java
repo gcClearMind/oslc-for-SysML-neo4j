@@ -5,8 +5,7 @@ import com.example.oslc.resource.BlockResource;
 import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import com.example.oslc.util.RdfUtil;
 import com.example.oslc.util.neo4jUtil;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
@@ -14,14 +13,15 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.example.oslc.util.neo4jUtil.getBlockResourceById;
 
@@ -88,7 +88,33 @@ public class BlockService {
         return list;
     }
 
+    public BlockResource queryResourceById(String oslcWhere,HttpServletRequest httpServletRequest, String productId) throws Exception {
+        // 正则表达式，匹配 oslc_ex:id= 后面的值
+        String regex = "oslc_neo:id=([^\\\\s&]+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(oslcWhere);
 
+        // 查找匹配项，提取匹配到的ID值
+        String id = matcher.find()? matcher.group(1):null;
+        if(id == null) return null;
+
+        BlockResource e = getResourceById(httpServletRequest,productId,id);
+
+//        Model model = RdfUtil.createRdfModel();
+
+//        Resource container = model.createResource(NsConstant.BASE_URI + productId + "/Blocks");
+//        Resource resource = model.createResource(NsConstant.BASE_URI + productId + "/Blocks/" + e.getId());
+//
+//        // 添加类型声明和属性
+//        container.addProperty(RDF.type, model.createResource(NsConstant.LDP_NAMESPACE + "BasicContainer"));
+//        container.addProperty(model.createProperty(NsConstant.LDP_NAMESPACE + "contains"), resource);
+//
+//        // 序列化RDF模型为RDF/XML字符串
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        model.write(out, "RDF/XML");
+//        return out.toString();
+        return e;
+    }
 
 
     public BlockResource getResourceById(HttpServletRequest httpServletRequest, String productId, String id) {
@@ -114,102 +140,5 @@ public class BlockService {
         return about;
     }
 
-
-    public String getBlockResourceShape() throws IOException {
-        Model model = RdfUtil.createRdfModel();
-        Resource r = model.createResource(NsConstant.OSLC_BLOCK_SHAPE);
-        r.addProperty(RDF.type, model.createResource(OslcConstants.TYPE_RESOURCE_SHAPE));
-        Resource idProp = model.createResource()
-                .addProperty(RDF.type, model.createResource(OslcConstants.TYPE_PROPERTY))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN ,"range"),
-                        model.createResource(NsConstant.BLOCK_NAMESPACE))
-                .addProperty(DCTerms.title, model.createLiteral("id", true))
-                .addProperty(DCTerms.description, model.createLiteral("id property shape.", true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "occurs"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Exactly-one"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "valueType"),
-                        model.createResource(OslcConstants.XML_NAMESPACE + "string"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "readOnly"),
-                        model.createTypedLiteral(true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "propertyDefinition"),
-                        model.createResource(NsConstant.BLOCK_ID))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "name"),"id")
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "representation"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Reference"));
-
-        Resource nameProp = model.createResource()
-                .addProperty(RDF.type, model.createResource(OslcConstants.TYPE_PROPERTY))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN ,"range"),
-                        model.createResource(NsConstant.BLOCK_NAMESPACE))
-                .addProperty(DCTerms.title, model.createLiteral("name", true))   //1
-                .addProperty(DCTerms.description, model.createLiteral("text property shape.", true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "occurs"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Zero-or-one"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "valueType"),
-                        model.createResource(OslcConstants.XML_NAMESPACE + "string"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "propertyDefinition"),
-                        model.createResource(NsConstant.BLOCK_NAME)) // 2
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "name"),"name") // 3
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "representation"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Reference"));
-
-        Resource xmiIdProp = model.createResource()
-                .addProperty(RDF.type, model.createResource(OslcConstants.TYPE_PROPERTY))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN ,"range"),
-                        model.createResource(NsConstant.BLOCK_NAMESPACE))
-                .addProperty(DCTerms.title, model.createLiteral("xmi:id", true))   //1
-                .addProperty(DCTerms.description, model.createLiteral("text property shape.", true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "occurs"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Zero-or-one"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "valueType"),
-                        model.createResource(OslcConstants.XML_NAMESPACE + "string"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "propertyDefinition"),
-                        model.createResource(NsConstant.BLOCK_XMI_ID)) // 2
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "name"),"xmi:id") // 3
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "representation"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Reference"));
-
-        Resource xmiTypeProp = model.createResource()
-                .addProperty(RDF.type, model.createResource(OslcConstants.TYPE_PROPERTY))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN ,"range"),
-                        model.createResource(NsConstant.BLOCK_NAMESPACE))
-                .addProperty(DCTerms.title, model.createLiteral("xmi:type", true))   //1
-                .addProperty(DCTerms.description, model.createLiteral("text property shape.", true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "occurs"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Zero-or-one"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "valueType"),
-                        model.createResource(OslcConstants.XML_NAMESPACE + "string"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "propertyDefinition"),
-                        model.createResource(NsConstant.BLOCK_XMI_TYPE)) // 2
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "name"),"xmi:type") // 3
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "representation"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Reference"));
-
-        Resource visibilityProp = model.createResource()
-                .addProperty(RDF.type, model.createResource(OslcConstants.TYPE_PROPERTY))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN ,"range"),
-                        model.createResource(NsConstant.BLOCK_NAMESPACE))
-                .addProperty(DCTerms.title, model.createLiteral("visibility", true))   //1
-                .addProperty(DCTerms.description, model.createLiteral("text property shape.", true))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "occurs"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Zero-or-one"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "valueType"),
-                        model.createResource(OslcConstants.XML_NAMESPACE + "string"))
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "propertyDefinition"),
-                        model.createResource(NsConstant.BLOCK_VISIBILITY)) // 2
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "name"),"visibility") // 3
-                .addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "representation"),
-                        model.createResource(OslcConstants.OSLC_CORE_DOMAIN + "Reference"));
-
-        r.addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "property"), idProp);
-        r.addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "property"), nameProp);
-        r.addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "property"), xmiIdProp);
-        r.addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "property"), xmiTypeProp);
-        r.addProperty(model.createProperty(OslcConstants.OSLC_CORE_DOMAIN, "property"), visibilityProp);
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        model.write(out, "RDF/XML-ABBREV");
-        return out.toString("UTF-8");
-    }
 
 }

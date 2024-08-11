@@ -5,6 +5,8 @@ public class NsConstant {
     public final static String data_path = "localhost:8080/neo4j/";
     public final static String block_path = data_path + "block/";
 
+    public final static String BASE_URI = "http://localhost:8081/oslc/services/";
+
     //------------------------------prefix / namespace------------------------------
 
     public final static String oslc_neo4j_prefix = "oslc_neo";

@@ -1,15 +1,12 @@
 package com.example.oslc.resource;
 import com.example.oslc.constant.NsConstant;
 import org.eclipse.lyo.oslc4j.core.annotation.*;
-import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
-import org.eclipse.lyo.oslc4j.core.model.Occurs;
-import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
-import org.eclipse.lyo.oslc4j.core.model.Representation;
+import org.eclipse.lyo.oslc4j.core.model.*;
 
 import java.net.URI;
 
 @OslcNamespace(NsConstant.oslc_neo4j_namespace)
-@OslcName("BLock")
+@OslcName("Block")
 @OslcResourceShape(title = "Block Resource Shape", describes = NsConstant.BLOCK_NAMESPACE)
 public class BlockResource extends AbstractResource {
     private Long id;
@@ -39,7 +36,6 @@ public class BlockResource extends AbstractResource {
     @OslcPropertyDefinition(NsConstant.BLOCK_ID)
     @OslcDescription("id property shape.")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcRepresentation(Representation.Inline)
     @OslcTitle("id")
     public Long getId() {
         return id;
@@ -52,7 +48,6 @@ public class BlockResource extends AbstractResource {
     @OslcPropertyDefinition(NsConstant.BLOCK_NAME)
     @OslcDescription("name property shape.")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcRepresentation(Representation.Inline)
     @OslcTitle("name")
     public String getName() {
         return name;
@@ -63,9 +58,9 @@ public class BlockResource extends AbstractResource {
     }
 
     @OslcPropertyDefinition(NsConstant.BLOCK_XMI_TYPE)
-    @OslcDescription("xmi:type property shape.")
-    @OslcOccurs(Occurs.ExactlyOne)
-    @OslcRepresentation(Representation.Inline)
+    @OslcDescription("xmiType property shape.")
+    @OslcOccurs(Occurs.ZeroOrOne)
+    @OslcName("XmiType")
     @OslcTitle("XmiType")
     public String getXmiType() {
         return XmiType;
@@ -76,10 +71,11 @@ public class BlockResource extends AbstractResource {
     }
 
     @OslcPropertyDefinition(NsConstant.BLOCK_XMI_ID)
-    @OslcDescription("xmi:id property shape.")
-    @OslcOccurs(Occurs.ExactlyOne)
-    @OslcRepresentation(Representation.Inline)
-    @OslcTitle("XmiID")
+    @OslcDescription("xmiId property shape.")
+    @OslcOccurs(Occurs.ZeroOrOne)
+    @OslcReadOnly
+    @OslcName("XmiId")
+    @OslcTitle("XmiId")
     public String getXmiId() {
         return XmiId;
     }
@@ -91,7 +87,6 @@ public class BlockResource extends AbstractResource {
     @OslcPropertyDefinition(NsConstant.BLOCK_VISIBILITY)
     @OslcDescription("visibility property shape.")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcRepresentation(Representation.Inline)
     @OslcTitle("visibility")
     public String getVisibility() {
         return visibility;

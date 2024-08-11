@@ -57,7 +57,7 @@ public class ServiceProvidersFactory
 
         System.out.println("basePath: " + basePath);
         if(basePath == null) {
-            basePath = "services/";
+            basePath = "";
         }
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
