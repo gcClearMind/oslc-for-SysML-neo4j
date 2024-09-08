@@ -62,6 +62,10 @@ public class ServiceProviderController {
     {
         httpServletResponse.addHeader("Oslc-Core-Version","2.0");
         System.out.println(serviceProviderId);
+
+        ServiceProviderCatalog catalog = ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
+
+
         ServiceProvider serviceProvider = ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, serviceProviderId);
 
         Service[] services = serviceProvider.getServices();
@@ -88,6 +92,7 @@ public class ServiceProviderController {
         String queryCapability = queryCapabilities[0].getQueryBase().toString();
         String queryShape = queryCapabilities[0].getResourceShape().toString();
 
+        model.addAttribute("catalog", catalog);
         model.addAttribute("serviceProvider", serviceProvider);
         model.addAttribute("service", service);
 
@@ -99,12 +104,12 @@ public class ServiceProviderController {
         model.addAttribute("queryShape", queryShape);
 
 
-        System.out.println("selectionDialog:"+selectionDialog);
-        System.out.println("creationDialog:"+creationDialog);
-        System.out.println("creationFactory:"+creationFactory);
-        System.out.println("creationShape:"+creationShape);
-        System.out.println("queryCapability:"+queryCapability);
-        System.out.println("queryShape:"+queryShape);
+//        System.out.println("selectionDialog:"+selectionDialog);
+//        System.out.println("creationDialog:"+creationDialog);
+//        System.out.println("creationFactory:"+creationFactory);
+//        System.out.println("creationShape:"+creationShape);
+//        System.out.println("queryCapability:"+queryCapability);
+//        System.out.println("queryShape:"+queryShape);
 
         return "ServiceProvider";
     }

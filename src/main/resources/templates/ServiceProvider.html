@@ -1,48 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>ServiceProvider</title>
+    <link rel="stylesheet" type="text/css" href="/oslc/services/css/provider.css">
 </head>
 <body>
-
-
-<div id="bugzilla-body">
-    <div id="page-index">
-
-        <h1>Service Provider ------ for <span th:text="${serviceProvider.getTitle()}"></span>(<span th:text="${serviceProvider.getIdentifier()}"></span> )</h1>
-
-        <p>Enables navigation to OSLC-CM Resource Creator and Selector Dialogs</p>
-
-        <table>
-            <tr>
-                <td><b>This document</b>:</td>
-                <td><a th:href="${serviceProvider.getAbout()}">
-                    <span th:text="${serviceProvider.getAbout()}"></span> </a></td>
-            </tr>
-        </table>
-
-        <h2>OSLC-neo4j-sysML Resource Selector Dialog</h2>
-        <p><a th:href="${selectionDialog}">
-            <span th:text="${selectionDialog}"></span> </a></p>
-
-        <h2>OSLC-CM Resource Creator Dialog</h2>
-        <p><a th:href="${creationDialog}">
-            <span th:text="${creationDialog}"></span> </a></p>
-
-        <h2>OSLC-CM Resource Creation Factory and Resource Shape</h2>
-        <p><a th:href="${creationFactory}">
-            <span th:text="${creationFactory}"></span></a></p>
-        <p><a th:href="${creationShape}">
-            <span th:text="${creationShape}"></span></a></p>
-
-        <h2>OSLC-CM Resource Query Capability and Resource Shape</h2>
-        <p><a th:href="${queryCapability}">
-            <span th:text="${queryCapability}"></span></a></p>
-        <p><a th:href="${queryShape}">
-            <span th:text="${queryShape}"></span></a></p>
-
+    <div class="nav">
+        <nav id="main-nav">
+            <ul>
+                <li><a th:href="${catalog.getAbout()}">Catalog</a></li>
+                <li><a th:href="${serviceProvider.getAbout()}">serviceProvider</a></li>
+            </ul>
+        </nav>
     </div>
-</div>
+
+    <div class="container">
+        <div class="page-index">
+
+            <h1>Service Provider ------ for <span th:text="${serviceProvider.getTitle()}"></span>(<span th:text="${serviceProvider.getIdentifier()}"></span>)</h1>
+
+            <p>Enables navigation to OSLC-SysML Resource Creator and Selector Dialogs</p>
+
+            <table>
+                <tr>
+                    <td><b>This document</b>:</td>
+                    <td><a th:href="${serviceProvider.getAbout()}">
+                        <span th:text="${serviceProvider.getAbout()}"></span> </a></td>
+                </tr>
+            </table>
+
+            <tbody>
+                <tr>
+                    <td><h2>OSLC-neo4j-sysML Resource Selector Dialog</h2></td>
+                    <td><p><a th:href="${selectionDialog}">
+                        <span th:text="${selectionDialog}"></span> </a></p></td>
+                </tr>
+                <tr>
+                    <td><h2>OSLC-neo4j-sysMLM Resource Creator Dialog</h2></td>
+                    <td><p><a th:href="${creationDialog}">
+                        <span th:text="${creationDialog}"></span> </a></p></td>
+                </tr>
+                <tr>
+                    <td> <h2>OSLC-neo4j-sysML Resource Creation Factory and Resource Shape</h2></td>
+                    <td><p><a th:href="${creationFactory}">
+                        <span th:text="${creationFactory}"></span></a></p>
+                        <p><a th:href="${creationShape}">
+                            <span th:text="${creationShape}"></span></a></p></td>
+                </tr>
+                <tr>
+                    <td><h2>OSLC-neo4j-sysML Resource Query Capability and Resource Shape</h2></td>
+                    <td><p><a th:href="${queryCapability}">
+                        <span th:text="${queryCapability}"></span></a></p>
+                        <p><a th:href="${queryShape}">
+                            <span th:text="${queryShape}"></span></a></p></td>
+                </tr>
+            </tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
 </body>
 </html>

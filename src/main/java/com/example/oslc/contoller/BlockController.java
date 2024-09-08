@@ -22,12 +22,14 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.lyo.oslc4j.core.annotation.*;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
+import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
+import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -118,12 +120,12 @@ public class  BlockController {
                                 HttpServletResponse httpServletResponse,
                                 Model model) throws ServletException, IOException
     {
-        int productIdNum = Integer.parseInt(productId);
-//        httpServletRequest.setAttribute("productId", productIdNum);
-//        httpServletRequest.setAttribute("HostUri", NsConstant.data_path);
-//        httpServletRequest.setAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
 
-//        model.addAttribute("productId", productIdNum);
+        ServiceProviderCatalog catalog = ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
+        ServiceProvider serviceProvider = ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, productId);
+
+        model.addAttribute("catalog", catalog);
+        model.addAttribute("serviceProvider", serviceProvider);
 //        model.addAttribute("HostUri", NsConstant.data_path);
 //        model.addAttribute("selectionUri",ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
 

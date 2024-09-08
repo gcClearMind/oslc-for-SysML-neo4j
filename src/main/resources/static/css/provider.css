@@ -1,0 +1,84 @@
+/* 基本样式重置，适用于所有元素 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 主导航栏样式 */
+#main-nav {
+    background-color: #333; /* 导航栏背景颜色 */
+    color: white;
+    width: 200px; /* 导航栏宽度 */
+    height: 100vh; /* Full viewport height */
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+#main-nav ul {
+    list-style-type: none; /* 移除列表点 */
+    height: 100%; /* Full height for vertical centering */
+    display: flex; /* 使用flexbox进行布局 */
+    flex-direction: column; /* 子元素垂直排列 */
+    justify-content: flex-start; /* 开始于顶部 */
+    padding-top: 50px; /* 从顶部开始向下偏移50px */
+}
+
+#main-nav li {
+    text-align: center; /* 水平居中文本 */
+    padding: 10px; /* 添加内边距 */
+}
+
+#main-nav li a {
+    color: white;
+    text-decoration: none; /* 移除下划线 */
+    display: block; /* 块级显示确保可以点击整个区域 */
+    padding: 10px 0; /* 上下边距 */
+}
+
+
+/* 主内容区域样式 */
+.container {
+    margin-left: 220px; /* 左边距，稍大于导航栏宽度 */
+    padding: 20px; /* 内边距 */
+    background-color: #f4f4f4; /* 轻色背景 */
+}
+
+h2 {
+    color: #333; /* 标题颜色 */
+    padding-bottom: 10px; /* 标题下方的内边距 */
+}
+
+table {
+    width: 100%; /* 表格宽度 */
+    border-collapse: collapse; /* 合并边框 */
+    margin-bottom: 20px; /* 表格下方的边距 */
+}
+
+th, td {
+    padding: 8px; /* 单元格内边距 */
+    text-align: left; /* 文本对齐 */
+    border-bottom: 1px solid #ddd; /* 单元格下方的边框 */
+}
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+a {
+    color: #06c;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+}

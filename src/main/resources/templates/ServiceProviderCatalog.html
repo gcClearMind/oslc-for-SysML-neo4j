@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>ServiceProviderCatalog</title>
+    <link rel="stylesheet" type="text/css" href="/oslc/services/css/catalog.css">
 </head>
 <body>
-    <div id="container">
+    <div class="nav">
+        <nav id="main-nav">
+            <ul>
+                <li><a th:href="${catalog.getAbout()}">Catalog</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="container">
+
+
+        <h2>Service Providers</h2>
         <table>
             <tr>
                 <td><b>This document</b>:</td>
@@ -15,14 +28,14 @@
             </tr>
         </table>
 
-        <h2>Service Providers</h2>
 
-        <table>
+
+        <tbody id="service-table">
             <tr th:each="s:${catalog.getServiceProviders()}">
-                <td>Service Provider for Product <span th:text="${s.getTitle()}"></span></td>
+                <td><h2>Service Provider for Product <span th:text="${s.getTitle()}"></span></h2></td>
                 <td><p><a th:href="${s.getAbout()}"><span th:text="${s.getAbout()}"></span></a></p></td>
             </tr>
-        </table>
+        </tbody>
     </div>
 </body>
 </html>
