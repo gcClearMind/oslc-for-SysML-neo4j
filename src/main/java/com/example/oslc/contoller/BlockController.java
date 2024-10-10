@@ -9,21 +9,14 @@ import com.example.oslc.service.BlockService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.*;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.lyo.oslc4j.core.annotation.*;
-import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
-import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
-import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
+import org.eclipse.lyo.oslc4j.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,5 +160,43 @@ public class  BlockController {
         List<BlockResource> list = new ArrayList<>();
         list.add(blockService.queryResourceById(oslcWhere, httpServletRequest, productId));
         return list;
+    }
+
+    @GetMapping(value = "/{BlockId}", produces = {OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
+    public Compact getCompact(@PathVariable("productId") final String productId,
+                              @PathVariable("BlockId") final String BlockId,
+                              HttpServletRequest httpServletRequest)
+            throws URISyntaxException, IOException, ServletException
+    {
+        BlockResource resource = blockService.getResourceById(httpServletRequest, productId, BlockId);
+
+        if (resource != null) {
+            final Compact compact = new Compact();
+
+
+            compact.setAbout(resource.getAbout());
+//            compact.setTitle(resource.getTitle());
+
+//            String iconUri = Uri() + "/images/favicon.ico";
+//            compact.setIcon(new URI(iconUri));
+
+            //Create and set attributes for OSLC preview resource
+            final Preview smallPreview = new Preview();
+            smallPreview.setHintHeight("11em");
+            smallPreview.setHintWidth("45em");
+            smallPreview.setDocument(new URI(compact.getAbout().toString() + "/smallPreview"));
+            compact.setSmallPreview(smallPreview);
+
+            //Use the HTML representation of a change request as the large preview as well
+            final Preview largePreview = new Preview();
+            largePreview.setHintHeight("20em");
+            largePreview.setHintWidth("45em");
+            largePreview.setDocument(compact.getAbout());
+            compact.setLargePreview(largePreview);
+
+            return compact;
+        }
+
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 }
