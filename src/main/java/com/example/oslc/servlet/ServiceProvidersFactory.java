@@ -20,6 +20,7 @@
 package com.example.oslc.servlet;
 
 import com.example.oslc.contoller.BlockController;
+import com.example.oslc.contoller.NodeController;
 import com.example.oslc.info.ServiceProviderInfo;
 import org.eclipse.lyo.oslc.domains.DctermsDomainConstants;
 import org.eclipse.lyo.oslc.domains.FoafDomainConstants;
@@ -39,7 +40,8 @@ public class ServiceProvidersFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
-        BlockController.class
+            //todo node block
+        NodeController.class
     };
 
     private ServiceProvidersFactory()

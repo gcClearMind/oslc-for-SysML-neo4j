@@ -8,7 +8,7 @@ function searchById() {
     const path = window.location.pathname;
     const productIdMatch  = path.match(/\/services\/([^\/]+)\/Blocks/);
     const productId = productIdMatch[1];
-    const baseUrl = "http://localhost:8081/oslc/services/" + productId + "/Blocks/queryResource?oslc.where=";
+    const baseUrl = "http://localhost:8081/oslc/services/" + productId + "/Nodes/queryResource?oslc.where=";
     const queryParam = 'oslc_neo:id=' + id;
     const encodedQueryParam = encodeURIComponent(queryParam);  //对url进行编码
     const queryUrl =  baseUrl + encodedQueryParam;   // 构建完整的查询URL

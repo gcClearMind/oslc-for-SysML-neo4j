@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+import com.example.oslc.resource.NodeResource;
 import com.example.oslc.service.BlockService;
 import com.example.oslc.util.JsonUtil;
 import org.apache.jena.base.Sys;
@@ -24,7 +25,7 @@ public class neo4jUtil {
         HttpRequest request = HttpRequest.newBuilder().uri
                         (URI.create(dataPath + "block/getBlockById/" + id))
                 .build();
-        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToResource(client, request);
+        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToBlockResource(client, request);
         return  data;
     }
 
@@ -33,7 +34,7 @@ public class neo4jUtil {
         HttpRequest request = HttpRequest.newBuilder().uri
                         (URI.create(dataPath + "block/getBlockByName/" + name))
                 .build();
-        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToResource(client, request);
+        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToBlockResource(client, request);
         return  data;
     }
 
@@ -42,7 +43,35 @@ public class neo4jUtil {
         HttpRequest request = HttpRequest.newBuilder().uri
                         (URI.create(dataPath + "block/getAllBlocks"))
                 .build();
-        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToResource(client, request);
+        List<BlockResource> data = (List<BlockResource>) JsonUtil.JsonToBlockResource(client, request);
+        return  data;
+    }
+
+    public static List<NodeResource> getNodeResourceById(String id) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri
+                        (URI.create(dataPath + "node/getNodeById/" + id))
+                .build();
+        List<NodeResource> data = (List<NodeResource>) JsonUtil.JsonToNodeResource(client, request);
+        return  data;
+    }
+
+    public static List<NodeResource> getNodeResourceByName(String name) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri
+                        (URI.create(dataPath + "node/getNodeByName/" + name))
+                .build();
+        List<NodeResource> data = (List<NodeResource>) JsonUtil.JsonToNodeResource(client, request);
+        return  data;
+    }
+
+    public static List<NodeResource> getAllNodeResource() {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri
+                        (URI.create(dataPath + "node/getAllNodes"))
+                .build();
+        System.out.println(dataPath +  "node/getAllNodes");
+        List<NodeResource> data = (List<NodeResource>) JsonUtil.JsonToNodeResource(client, request);
         return  data;
     }
 

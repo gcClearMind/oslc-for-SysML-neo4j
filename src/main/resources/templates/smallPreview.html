@@ -20,9 +20,24 @@
 </head>
 <body>
 <div class="container">
-    <div class="item"><strong>Id:</strong> <span th:text="${resource.id}"></span></div>
-    <div class="item"><strong>Name:</strong> <span th:text="${resource.name}"></span></div>
-    <div class="item"><strong>serviceProvider:</strong> <span th:text="${resource.serviceProvider}"></span></div>
+    <div class="item"><strong>Identity:</strong> <span th:text="${resource.getIdentity()}"></span></div>
+    <div class="item"><strong>Labels:</strong>
+        <ul th:if="${resource.labels.isEmpty() == false}">
+            <li th:each="label : ${resource.labels}" th:text="${label}"></li>
+        </ul>
+        <span th:if="${resource.labels.isEmpty()}">No labels.</span>
+    </div>
+    <div class="item">
+        <strong>Properties:</strong>
+        <dl th:if="${resource.properties.isEmpty() == false}">
+            <div th:each="entry : ${resource.properties}">
+                <ul>
+                 <span th:text="${entry.key}"></span> : <span th:text="${entry.value}">Value</span>
+                </ul>
+            </div>
+        </dl>
+        <span th:if="${resource.properties.isEmpty()}">No properties.</span>
+    </div>
 </div>
 </body>
 </html>

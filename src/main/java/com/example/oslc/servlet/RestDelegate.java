@@ -155,7 +155,8 @@ public class RestDelegate {
         ServiceProviderInfo spInfo = new ServiceProviderInfo();
 //        spInfo.serviceProviderId = SP_DEFAULT;
         spInfo.ServiceProviderId = "1";
-        spInfo.name = "Block ServiceProvider";
+        // todo node / block
+        spInfo.name = "Node ServiceProvider";
         serviceProviderInfos = new ServiceProviderInfo[] {spInfo};
         // End of user code
 

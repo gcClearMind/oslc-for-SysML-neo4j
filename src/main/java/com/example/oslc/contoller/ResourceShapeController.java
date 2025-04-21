@@ -21,6 +21,7 @@
 package com.example.oslc.contoller;
 
 import com.example.oslc.resource.BlockResource;
+import com.example.oslc.resource.NodeResource;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -78,9 +79,9 @@ public class ResourceShapeController
                                                    HttpServletRequest httpServletRequest)
             throws OslcCoreApplicationException,
             URISyntaxException, UnsupportedEncodingException {
-        //todo 暂时固定为展示block
+        //todo 暂时固定为展示block   Node
 //        final Class<?> resourceClass = Application.getResourceShapePathToResourceClass0Map().get(resourceShapePath);
-        final Class<?> resourceClass = BlockResource.class;
+        final Class<?> resourceClass = NodeResource.class;
         if (resourceClass != null) {
             final String servletUri = OSLC4JUtils.resolveServletUri(httpServletRequest);
             ResourceShape resourceShape = ResourceShapeFactory.createResourceShape(servletUri, OslcConstants.PATH_RESOURCE_SHAPES,

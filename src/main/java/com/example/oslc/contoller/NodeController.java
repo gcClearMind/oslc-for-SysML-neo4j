@@ -1,19 +1,10 @@
 package com.example.oslc.contoller;
 
 
-import com.alibaba.fastjson2.JSON;
 import com.example.oslc.constant.NsConstant;
-import com.example.oslc.resource.BlockResource;
-import com.example.oslc.service.BlockService;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.*;
-
-import javax.ws.rs.core.Response;
-
-import jakarta.ws.rs.QueryParam;
+import com.example.oslc.resource.NodeResource;
+import com.example.oslc.service.NodeService;
+import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.lyo.oslc4j.core.annotation.*;
 import org.eclipse.lyo.oslc4j.core.model.*;
@@ -21,33 +12,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.example.oslc.servlet.ServiceProviderCatalogSingleton;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Controller
-//@OslcService(NsConstant.oslc_neo4j_namespace)
-//@RequestMapping("{productId}/Blocks")
+@Controller
+@OslcService(NsConstant.oslc_neo4j_namespace)
+@RequestMapping("{productId}/Nodes")
 
-public class  BlockController {
+public class NodeController {
 
-//    @Autowired
-    private BlockService blockService;
+    @Autowired
+    private NodeService NodeService;
 
     @OslcDialogs(
             {
                     @OslcDialog
                             (
-                                    title = "Block Selection Dialog",
-                                    label = "Block Selection Dialog",
-                                    uri = "/{productId}/Blocks/selector",
+                                    title = "Node Selection Dialog",
+                                    label = "Node Selection Dialog",
+                                    uri = "/{productId}/Nodes/selector",
                                     hintWidth = "525px",
                                     hintHeight = "325px",
-                                    resourceTypes = {NsConstant.BLOCK_NAMESPACE},
+                                    resourceTypes = {NsConstant.NODE_NAMESPACE},
                                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
 
                             )
@@ -55,61 +50,61 @@ public class  BlockController {
             })
     @OslcQueryCapability
             (
-                    title = "Block Query Capability",
-                    label = "Block Catalog Query",
-                    resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_BLOCK,
+                    title = "Node Query Capability",
+                    label = "Node Catalog Query",
+                    resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_Node,
                     resourceTypes = {NsConstant.BLOCK_NAMESPACE},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
 
     @ResponseBody
     @GetMapping("")
-    public List<BlockResource> getAllBlocks(@PathVariable String productId,
+    public List<NodeResource> getAllNodes(@PathVariable String productId,
                                     HttpServletRequest httpServletRequest) throws IOException {
-        return blockService.getAllBlockResources(httpServletRequest, productId);
+        return NodeService.getAllNodeResources(httpServletRequest, productId);
     }
 
     @OslcDialog
             (
                     title = "Change Request Creation Dialog",
                     label = "Change Request Creation Dialog",
-                    uri = "/{productId}/Blocks/creator",
+                    uri = "/{productId}/Nodes/creator",
                     hintWidth = "600px",
                     hintHeight = "375px",
-                    resourceTypes = {NsConstant.BLOCK_NAMESPACE},
+                    resourceTypes = {NsConstant.NODE_NAMESPACE},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
     @OslcCreationFactory
             (
                     title = "Change Request Creation Factory",
                     label = "Change Request Creation",
-                    resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_BLOCK},
-                    resourceTypes = {NsConstant.BLOCK_NAMESPACE},
+                    resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + NsConstant.PATH_Node},
+                    resourceTypes = {NsConstant.NODE_NAMESPACE},
                     usages = {OslcConstants.OSLC_USAGE_DEFAULT}
             )
 
     @ResponseBody
     @PostMapping("")
     public String addResource(@PathVariable final String productId,
-                                final BlockResource blockResource) throws IOException, ServletException {
+                                final NodeResource NodeResource) throws IOException, ServletException {
         return null;
     }
 
 
 
 //
-//    @GetMapping("/{BlockId}")
-//    public BlockResource getBlockById(@PathVariable String productId,
-//                                      @PathVariable String BlockId,
+//    @GetMapping("/{NodeId}")
+//    public NodeResource getNodeById(@PathVariable String productId,
+//                                      @PathVariable String NodeId,
 //                                      HttpServletRequest httpServletRequest) throws IOException {
-//        return blockService.getResourceById(httpServletRequest, productId, BlockId);
+//        return NodeService.getResourceById(httpServletRequest, productId, NodeId);
 //    }
 
 
 
 
     @GetMapping(value = "/selector")
-    public String BlockSelector(@PathVariable String productId,
+    public String NodeSelector(@PathVariable String productId,
                                 HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
                                 Model model) throws ServletException, IOException
@@ -131,44 +126,45 @@ public class  BlockController {
 
     @ResponseBody
     @PostMapping(value = "/creator")
-    public String BlockResourceCreator(@PathVariable String productId,
+    public String NodeResourceCreator(@PathVariable String productId,
                                      Model model){
-//        model.addAttribute("blockResource", new BlockResource());
+//        model.addAttribute("NodeResource", new NodeResource());
         return "createResource";
     }
 
 
-    @GetMapping(value = "{blockId}/smallPreview", produces = {MediaType.TEXT_HTML})
+    @GetMapping(value = "{NodeId}/smallPreview", produces = {MediaType.TEXT_HTML})
     public String smallPreview(@PathVariable("productId")       final String productId,
-                               @PathVariable("blockId") final String blockId,
+                               @PathVariable("NodeId") final String NodeId,
                                HttpServletRequest httpServletRequest,
                                Model model)
     {
-        BlockResource resource = blockService.getResourceById(httpServletRequest, productId, blockId);
+        NodeResource resource = NodeService.getResourceById(httpServletRequest, productId, NodeId);
         model.addAttribute("resource", resource);
         return "smallPreview";
     }
 
 
+
     @ResponseBody
     @PostMapping("/queryResource")
-    public List<BlockResource> queryResourceById(@RequestParam(name = "oslc.where", required = false, defaultValue = "") String oslcWhere,
+    public List<NodeResource> queryResourceById(@RequestParam(name = "oslc.where", required = false, defaultValue = "") String oslcWhere,
                                     HttpServletRequest httpServletRequest,
                                     @PathVariable("productId")       final String productId) throws Exception {
         System.out.println("queryResource");
         // 返回查询到的资源的RDF数据
-        List<BlockResource> list = new ArrayList<>();
-        list.add(blockService.queryResourceById(oslcWhere, httpServletRequest, productId));
+        List<NodeResource> list = new ArrayList<>();
+        list.add(NodeService.queryResourceById(oslcWhere, httpServletRequest, productId));
         return list;
     }
 
-    @GetMapping(value = "/{BlockId}", produces = {OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
+    @GetMapping(value = "/{NodeId}", produces = {OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
     public Compact getCompact(@PathVariable("productId") final String productId,
-                              @PathVariable("BlockId") final String BlockId,
+                              @PathVariable("NodeId") final String NodeId,
                               HttpServletRequest httpServletRequest)
             throws URISyntaxException, IOException, ServletException
     {
-        BlockResource resource = blockService.getResourceById(httpServletRequest, productId, BlockId);
+        NodeResource resource = NodeService.getResourceById(httpServletRequest, productId, NodeId);
 
         if (resource != null) {
             final Compact compact = new Compact();

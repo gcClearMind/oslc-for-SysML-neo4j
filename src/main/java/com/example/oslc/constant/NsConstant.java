@@ -5,6 +5,8 @@ public class NsConstant {
     public final static String data_path = "localhost:8080/neo4j/";
     public final static String block_path = data_path + "block/";
 
+    public final static String node_path = data_path + "node/";
+
     public final static String BASE_URI = "http://localhost:8081/oslc/services/";
 
     //------------------------------prefix / namespace------------------------------
@@ -21,9 +23,10 @@ public class NsConstant {
     //------------------------------CLASS------------------------------
     public final static String BLOCK_NAMESPACE = "localhost:8080/neo4j/neo4j-vocab#Block";
 
+    public final static String NODE_NAMESPACE = "localhost:8080/neo4j/neo4j-vocab#Node";
     public final static String PATH_BLOCK = "Block";
 
-
+    public final static String PATH_Node = "Node";
 
     //----------------------------Property------------------------------
     public final static String BLOCK_ID = oslc_neo4j_namespace + "id";
@@ -38,10 +41,15 @@ public class NsConstant {
     public final static String oslc_VISIBILITY = oslc_neo4j_prefix + ":visibility";
 
 
-
-
+    public final static String NODE_IDENTITY = oslc_neo4j_namespace + "identity";
+    public final static String NODE_LABELS = oslc_neo4j_namespace + "labels";
+    public final static String NODE_PROPERTIES = oslc_neo4j_namespace + "properties";
+    public final static String NODE_ELEMENTID= oslc_neo4j_namespace + "elementId";
+    public final static String NODE_KEYS = oslc_neo4j_namespace + "keys";
+    public final static String NODE_VALUES = oslc_neo4j_namespace + "values";
     //-------------------------------ServerConstants------------------------------------
 
     public static final String HDR_OSLC_VERSION = "OSLC-Core-Version";
     public static final String OSLC_VERSION_V2 = "2.0";
+
 }
